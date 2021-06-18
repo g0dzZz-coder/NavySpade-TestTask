@@ -4,13 +4,21 @@ using UnityEngine;
 
 namespace NavySpade.UI
 {
-    using Gameplay;
+    using Gameplay.Entities;
+    using Core;
 
     public class HeroUI : MonoBehaviour
     {
-        [SerializeField] HeroModel hero = null;
+        [SerializeField] HeroData hero = null;
         [SerializeField] TMP_Text livesText = null;
         [SerializeField] TMP_Text scoreText = null;
+
+        private void Awake()
+        {
+            Hide();
+
+            Game.Restarted += Show;
+        }
 
         private void OnEnable()
         {
@@ -32,6 +40,16 @@ namespace NavySpade.UI
         private void UpdateScore(int score)
         {
             scoreText.text = score.ToString();
+        }
+
+        private void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void Hide()
+        {
+            gameObject.SetActive(false);
         }
 
         private void OnValidate()

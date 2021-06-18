@@ -4,7 +4,6 @@ using UnityEngine.Events;
 namespace NavySpade.UI
 {
     using Animation;
-    using Utils;
 
     public abstract class MenuBase : MonoBehaviour
     {
@@ -19,10 +18,7 @@ namespace NavySpade.UI
             if (panel.enabled)
                 return;
 
-            if (animationSettings)
-                panel.Show(animationSettings);
-
-            onEnabled.Invoke();
+            CustomAnimator.Show(panel, animationSettings, () => onEnabled.Invoke());
         }
 
         public virtual void Disable()
@@ -30,13 +26,7 @@ namespace NavySpade.UI
             if (panel.enabled == false)
                 return;
 
-            if (animationSettings)
-            {
-                panel.Hide(animationSettings, () => OnDisabled());
-                return;
-            }
-
-            onDisabled.Invoke();
+            CustomAnimator.Hide(panel, animationSettings, OnDisabled);
         }
 
         private void OnDisabled()

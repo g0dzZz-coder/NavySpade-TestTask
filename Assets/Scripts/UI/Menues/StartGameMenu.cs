@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
-using DG.Tweening;
 
 namespace NavySpade.UI
 {
+    using Animation;
     using Core;
-    using UnityEngine.Events;
 
     public class StartGameMenu : MenuBase
     {
@@ -15,14 +15,15 @@ namespace NavySpade.UI
         private void Awake()
         {
             onEnabled.AddListener(ShowStartButton);
-            onDisabled.AddListener(HideStartButton);
             startButton.onClick.AddListener(OnStartButtonClicked);
 
             Enable();
+            ShowStartButton();
         }
 
         private void OnStartButtonClicked()
         {
+            HideStartButton();
             Game.Restart();
             Disable();
 
@@ -31,13 +32,15 @@ namespace NavySpade.UI
 
         private void ShowStartButton()
         {
-            startButton.gameObject.SetActive(true);
-            startButton.transform.DOJump(Vector3.one, 1f, 1, animationSettings.time);
+            if (startButton == null)
+                return;
+
+            CustomAnimator.Show(startButton.transform, animationSettings);
         }
 
         private void HideStartButton()
         {
-            startButton.gameObject.SetActive(false);
+            CustomAnimator.Hide(startButton.transform, animationSettings);
         }
     }
 }
