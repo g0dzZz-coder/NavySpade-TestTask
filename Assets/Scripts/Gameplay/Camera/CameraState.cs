@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NavySpade.Gameplay.Camera
+namespace NavySpade.Gameplay.Cameras
 {
     [CreateAssetMenu(fileName = "CameraState", menuName = "Settings/CameraState", order = 51)]
     public class CameraState : ScriptableObject

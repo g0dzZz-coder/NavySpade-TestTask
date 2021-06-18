@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace NavySpade.Gameplay.Camera
+namespace NavySpade.Gameplay.Cameras
 {
     using Core;
 
