@@ -5,56 +5,37 @@ using UnityEngine;
 namespace NavySpade.UI
 {
     using Gameplay.Entities;
-    using Core;
 
-    public class HeroUI : MonoBehaviour
+    public class HeroUI : UIElement
     {
-        [SerializeField] HeroData hero = null;
-        [SerializeField] TMP_Text livesText = null;
-        [SerializeField] TMP_Text scoreText = null;
+        [SerializeField] private HeroData hero = null;
+        [SerializeField] private TMP_Text healthText = null;
 
-        private void Awake()
+        private void Start()
         {
-            Hide();
-
-            Game.Restarted += Show;
+            Show();
         }
 
         private void OnEnable()
         {
-            UpdateLives(hero.Lives);
+            UpdateLives(hero.Health);
 
-            hero.LivesUpdated += UpdateLives;
+            hero.HealthUpdated += UpdateLives;
         }
 
         private void OnDisable()
         {
-            hero.LivesUpdated -= UpdateLives;
+            hero.HealthUpdated -= UpdateLives;
         }
 
         private void UpdateLives(int livesCount)
         {
-            livesText.text = livesCount.ToString();
-        }
-
-        private void UpdateScore(int score)
-        {
-            scoreText.text = score.ToString();
-        }
-
-        private void Show()
-        {
-            gameObject.SetActive(true);
-        }
-
-        private void Hide()
-        {
-            gameObject.SetActive(false);
+            healthText.text = livesCount.ToString();
         }
 
         private void OnValidate()
         {
-            if (livesText == null || scoreText == null)
+            if (healthText == null)
                 throw new NullReferenceException();
         }
     }

@@ -1,17 +1,20 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using System;
+using UnityEngine;
 
 namespace NavySpade.Animation
 {
-    public enum AnimationType
+    [Serializable]
+    public class AnimationSettings
     {
-        Fade,
-        Scale
+        [Range(0f, 10f)]
+        public float duration = 0.5f;
     }
 
-    [CreateAssetMenu(fileName = "Animation", menuName = "Settings/Animation", order = 51)]
-    public class AnimationSettings : ScriptableObject
+    [Serializable]
+    public class LoopAnimationSettings : AnimationSettings
     {
-        public AnimationType type = default;
-        public float time = 0.2f;
+        public LoopType loopType = LoopType.Incremental;
+        public Ease ease = Ease.Flash;
     }
 }

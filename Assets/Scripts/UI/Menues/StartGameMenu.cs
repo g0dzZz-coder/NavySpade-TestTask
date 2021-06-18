@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace NavySpade.UI
 {
     using Animation;
-    using Core;
 
     public class StartGameMenu : MenuBase
     {
+        [Scene]
+        [SerializeField] private string gameScene = "SampleLevel";
         [SerializeField] private Button startButton = null;
-        [SerializeField] private UnityEvent onGameStarted = null;
 
         private void Awake()
         {
@@ -23,11 +22,10 @@ namespace NavySpade.UI
 
         private void OnStartButtonClicked()
         {
-            HideStartButton();
-            Game.Restart();
             Disable();
+            HideStartButton();
 
-            onGameStarted?.Invoke();
+            SceneChanger.Instance.FadeToScene(gameScene);
         }
 
         private void ShowStartButton()
@@ -35,12 +33,12 @@ namespace NavySpade.UI
             if (startButton == null)
                 return;
 
-            CustomAnimator.Show(startButton.transform, animationSettings);
+            AnimationExtensions.Show(startButton.transform);
         }
 
         private void HideStartButton()
         {
-            CustomAnimator.Hide(startButton.transform, animationSettings);
+            AnimationExtensions.Hide(startButton.transform);
         }
     }
 }

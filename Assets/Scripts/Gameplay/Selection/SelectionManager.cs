@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace NavySpade.Gameplay
 {
-    using Core;
-
     [RequireComponent(typeof(IRayProvider))]
     [RequireComponent(typeof(ISelector))]
     [RequireComponent(typeof(ISelectionResponse))]
     public class SelectionManager : MonoBehaviour
     {
+        public event Action<Transform> SelectionChanged = null;
+
         private IRayProvider rayProvider = null;
         private ISelector selector;
         private ISelectionResponse response;
@@ -17,14 +18,9 @@ namespace NavySpade.Gameplay
 
         private void Awake()
         {
-            enabled = false;
-
             rayProvider = GetComponent<IRayProvider>();
             selector = GetComponent<ISelector>();
             response = GetComponent<ISelectionResponse>();
-
-            Game.Restarted += () => enabled = true;
-            Game.Ended += flag => enabled = false;
         }
 
         private void Update()
@@ -43,6 +39,8 @@ namespace NavySpade.Gameplay
 
             currentSelection = selection;
             response.OnSelect(currentSelection);
+
+            SelectionChanged?.Invoke(currentSelection);
         }
     }
 }

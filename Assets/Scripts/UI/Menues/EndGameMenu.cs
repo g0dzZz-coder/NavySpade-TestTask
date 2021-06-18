@@ -23,13 +23,11 @@ namespace NavySpade.UI
         private void OnEnable()
         {
             Game.Ended += Enable;
-            Game.Restarted += Disable;
         }
 
         private void OnDisable()
         {
             Game.Ended -= Enable;
-            Game.Restarted -= Disable;
         }
 
         private void Enable(bool win)
@@ -42,7 +40,6 @@ namespace NavySpade.UI
 
         private void OnRestartButtonClicked()
         {
-            Game.Restart();
             Disable();
         }
     }

@@ -7,31 +7,30 @@ namespace NavySpade.UI
 
     public abstract class MenuBase : MonoBehaviour
     {
-        [SerializeField] protected CanvasGroup panel = null;
-        [SerializeField] protected AnimationSettings animationSettings = null;
+        [SerializeField] protected CanvasGroup menuRoot = null;
 
         [SerializeField] protected UnityEvent onEnabled = null;
         [SerializeField] protected UnityEvent onDisabled = null;
 
         public virtual void Enable()
         {
-            if (panel.enabled)
+            if (menuRoot.enabled)
                 return;
 
-            CustomAnimator.Show(panel, animationSettings, () => onEnabled.Invoke());
+            AnimationExtensions.Show(menuRoot.transform, () => onEnabled.Invoke());
         }
 
         public virtual void Disable()
         {
-            if (panel.enabled == false)
+            if (menuRoot.enabled == false)
                 return;
 
-            CustomAnimator.Hide(panel, animationSettings, OnDisabled);
+            AnimationExtensions.Hide(menuRoot.transform, OnDisabled);
         }
 
         private void OnDisabled()
         {
-            panel.gameObject.SetActive(false);
+            menuRoot.gameObject.SetActive(false);
             onDisabled?.Invoke();
         }
     }

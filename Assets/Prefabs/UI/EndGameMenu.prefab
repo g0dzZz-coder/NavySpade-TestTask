@@ -429,8 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233851fa0ee815544afaa194c2864fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 4332804712735744887}
-  animationSettings: {fileID: 11400000, guid: 996a0cb1cb17bc549ad8d28d710b2840, type: 2}
+  menuRoot: {fileID: 4332804712735744887}
   onEnabled:
     m_PersistentCalls:
       m_Calls: []

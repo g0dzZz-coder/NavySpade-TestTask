@@ -3,12 +3,11 @@ using DG.Tweening;
 
 namespace NavySpade.Misc
 {
+    using Animation;
+
     public class Rotatable : MonoBehaviour
     {
-        [Range(0f, 100f)]
-        [SerializeField] float duration = 1f;
-        [SerializeField] LoopType loopType = LoopType.Incremental;
-        [SerializeField] Ease ease = Ease.InCubic;
+        [SerializeField] private LoopAnimationSettings settings = null;
 
         private void Start()
         {
@@ -27,7 +26,9 @@ namespace NavySpade.Misc
 
         private void StartAnimation()
         {
-            transform.DORotate(new Vector3(0, 180, 0), duration, RotateMode.Fast).SetLoops(-1, loopType).SetEase(ease);
+            transform.DORotate(Vector3.up * 90, settings.duration, RotateMode.Fast)
+                .SetLoops(-1, settings.loopType)
+                .SetEase(settings.ease);
         }
     }
 }
