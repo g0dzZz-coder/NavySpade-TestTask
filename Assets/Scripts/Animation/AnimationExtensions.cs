@@ -72,7 +72,7 @@ namespace NavySpade.Animation
             if (transform.TryGetComponent(out CanvasGroup canvasGroup))
                 canvasGroup.DOFade(0f, settings.duration).OnComplete(() => OnHideAnimationCompleted(canvasGroup.gameObject, callback));
             else
-                transform.DOScale(1f, settings.duration).OnComplete(() => OnHideAnimationCompleted(transform.gameObject, callback));
+                transform.DOScale(0f, settings.duration).OnComplete(() => OnHideAnimationCompleted(transform.gameObject, callback));
         }
 
         private static void OnHideAnimationCompleted(GameObject obj, Action callback = null)

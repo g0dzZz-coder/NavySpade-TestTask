@@ -1,9 +1,9 @@
 ﻿using UnityEditor;
+using UnityEngine;
 
 namespace NavySpade.Editor
 {
-    using Gameplay.Map;
-    using UnityEngine;
+    using Map;
     using Editor = UnityEditor.Editor;
 
     [CustomEditor(typeof(MapGenerator))]

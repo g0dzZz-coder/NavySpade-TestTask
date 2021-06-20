@@ -11,13 +11,13 @@ namespace NavySpade.UI
         [SerializeField] private string gameScene = "SampleLevel";
         [SerializeField] private Button startButton = null;
 
-        private void Awake()
+        private void Start()
         {
-            onEnabled.AddListener(ShowStartButton);
-            startButton.onClick.AddListener(OnStartButtonClicked);
-
             Enable();
             ShowStartButton();
+
+            onEnabled.AddListener(ShowStartButton);
+            startButton.onClick.AddListener(OnStartButtonClicked);
         }
 
         private void OnStartButtonClicked()

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace NavySpade.UI
 {
-    using Gameplay.Entities;
+    using Entities;
 
     public class EntityIconUI : MonoBehaviour
     {

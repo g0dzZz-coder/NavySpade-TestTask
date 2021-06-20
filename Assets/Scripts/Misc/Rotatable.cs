@@ -8,6 +8,8 @@ namespace NavySpade.Misc
     public class Rotatable : MonoBehaviour
     {
         [SerializeField] private LoopAnimationSettings settings = null;
+        [SerializeField] private Vector3 direction = new Vector3(0, 1, 0);
+        [SerializeField] private float angle = 90f;
 
         private void Start()
         {
@@ -26,7 +28,7 @@ namespace NavySpade.Misc
 
         private void StartAnimation()
         {
-            transform.DORotate(Vector3.up * 90, settings.duration, RotateMode.Fast)
+            transform.DORotate(direction * angle, settings.duration, RotateMode.Fast)
                 .SetLoops(-1, settings.loopType)
                 .SetEase(settings.ease);
         }

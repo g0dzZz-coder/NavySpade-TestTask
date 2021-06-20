@@ -14,6 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 383884861792213948, guid: d987ce0155ff8f341981ed9a13e35978, type: 3}
   icon: {fileID: 0}
-  spawnDelay: 5
-  randomDelay: 0
-  maxCount: 20
+  startAmount: 30

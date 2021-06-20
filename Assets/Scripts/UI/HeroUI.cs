@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NavySpade.UI
 {
-    using Gameplay.Entities;
+    using Entities;
 
     public class HeroUI : UIElement
     {
