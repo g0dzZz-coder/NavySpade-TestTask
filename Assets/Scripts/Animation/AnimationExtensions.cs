@@ -12,7 +12,6 @@ namespace NavySpade.Animation
                 return;
 
             obj.gameObject.SetActive(true);
-
             if (obj.TryGetComponent(out CustomAnimator customAnimator))
                 ShowUsingDotween(obj, customAnimator.Settings, callback);
         }
@@ -37,7 +36,7 @@ namespace NavySpade.Animation
             if (transform.TryGetComponent(out CanvasGroup canvasGroup))
             {
                 canvasGroup.alpha = 0f;
-                canvasGroup.DOFade(10f, settings.duration).OnComplete(() => callback?.Invoke());
+                canvasGroup.DOFade(1f, settings.duration).OnComplete(() => callback?.Invoke());
             }
             else
             {

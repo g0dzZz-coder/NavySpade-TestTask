@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NavySpade.Entities
+namespace NavySpade.Entities.Hero
 {
     [RequireComponent(typeof(Animator))]
     public class HeroAnimationController : MonoBehaviour

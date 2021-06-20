@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace NavySpade.Entities
+namespace NavySpade.Entities.Hero
 {
     public class HeroHealthController : MonoBehaviour
     {

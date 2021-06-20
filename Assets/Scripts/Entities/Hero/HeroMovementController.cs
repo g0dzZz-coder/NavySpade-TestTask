@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace NavySpade.Entities
+namespace NavySpade.Entities.Hero
 {
     using Map;
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NavySpade.Entities
+namespace NavySpade.Entities.Hero
 {
     [CreateAssetMenu(fileName = "Hero", menuName = "Settings/Hero", order = 51)]
     public class HeroData : EntityData

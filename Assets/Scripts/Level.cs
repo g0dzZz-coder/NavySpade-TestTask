@@ -4,7 +4,7 @@ using UnityEngine;
 namespace NavySpade
 {
     using Cameras;
-    using Entities;
+    using Entities.Hero;
     using Map;
     using Utils;
 
