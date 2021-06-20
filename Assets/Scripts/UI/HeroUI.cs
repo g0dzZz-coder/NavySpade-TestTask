@@ -15,6 +15,7 @@ namespace NavySpade.UI
         private void Start()
         {
             UpdateLives(hero.Health);
+            UpdateInvulnerable(hero.IsInvulnerable);
 
             Level.Instance.Restarted += Show;
             Level.Instance.GameEnded += Hide;
