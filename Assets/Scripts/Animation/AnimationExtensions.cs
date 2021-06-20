@@ -14,14 +14,7 @@ namespace NavySpade.Animation
             obj.gameObject.SetActive(true);
 
             if (obj.TryGetComponent(out CustomAnimator customAnimator))
-            {
                 ShowUsingDotween(obj, customAnimator.Settings, callback);
-            }
-            else if (obj.TryGetComponent(out Animator animator))
-            {
-                ShowUsingAnimator(animator);
-                callback?.Invoke();
-            }
         }
 
         public static void Hide(Transform obj, Action callback = null)
@@ -35,22 +28,8 @@ namespace NavySpade.Animation
                 return;
             }
 
-            if (obj.TryGetComponent(out Animator animator))
-                HideUsingAnimator(animator);
-            else
-                obj.gameObject.SetActive(false);
-
+            obj.gameObject.SetActive(false);
             callback?.Invoke();
-        }
-
-        private static void ShowUsingAnimator(Animator animator)
-        {
-            animator.SetBool("IsOpen", true);
-        }
-
-        private static void HideUsingAnimator(Animator animator)
-        {
-            animator.SetBool("IsOpen", false);
         }
 
         private static void ShowUsingDotween(Transform transform, AnimationSettings settings, Action callback = null)
@@ -58,12 +37,16 @@ namespace NavySpade.Animation
             if (transform.TryGetComponent(out CanvasGroup canvasGroup))
             {
                 canvasGroup.alpha = 0f;
-                canvasGroup.DOFade(100f, settings.duration).OnComplete(() => callback?.Invoke());
+                canvasGroup.DOFade(10f, settings.duration).OnComplete(() => callback?.Invoke());
             }
             else
             {
+                var scale = transform.localScale;
+                if (scale == Vector3.zero)
+                    scale = Vector3.one;
+
                 transform.DOScale(0f, 0f);
-                transform.DOScale(1f, settings.duration).OnComplete(() => callback?.Invoke());
+                transform.DOScale(scale, settings.duration).OnComplete(() => callback?.Invoke());
             }
         }
 

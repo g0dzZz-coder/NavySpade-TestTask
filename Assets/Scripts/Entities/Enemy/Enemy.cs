@@ -3,15 +3,18 @@ using UnityEngine.AI;
 
 namespace NavySpade.Entities
 {
+    [RequireComponent(typeof(IMovementHandler))]
     public class Enemy : EntityBase<EnemyData>
     {
-        [SerializeField] private NavMeshAgent agent = null;
+        private IMovementHandler movementHandler;
 
         private float timer = 0f;
 
-        private void Awake()
+        protected override void Awake()
         {
-            agent.speed = data.speed;
+            base.Awake();
+            movementHandler = GetComponent<IMovementHandler>();
+            movementHandler.Init(data.speed, 0f);
         }
 
         private void FixedUpdate()
@@ -21,9 +24,11 @@ namespace NavySpade.Entities
             if (timer < data.wanderDuration)
                 return;
 
-            var target = GetRandomNavmeshLocation(data.wanderRadius, -1);
-            agent.SetDestination(target);
-            timer = 0;
+            var target = GetRandomNavmeshLocation(data.wanderRadius, -1);         
+            if (movementHandler.TryToSetDestination(target))
+            {
+                timer = 0;
+            }
         }
 
         private void OnTriggerEnter(Collider other)

@@ -1,15 +1,14 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace NavySpade.Entities
 {
     using Map;
 
     [RequireComponent(typeof(HeroInputReceiver))]
+    [RequireComponent(typeof(IMovementHandler))]
     public class HeroMovementController : MonoBehaviour
     {
-        [SerializeField] private NavMeshAgent agent = null;
         [SerializeField] private float stoppingDistance = 0.25f;
         [SerializeField] private Tile startPoint = null;
 
@@ -20,7 +19,9 @@ namespace NavySpade.Entities
 
         private bool isMoving;
         private Vector3 destination;
+
         private HeroInputReceiver inputReceiver;
+        private IMovementHandler handler;
 
         private void Update()
         {
@@ -38,17 +39,17 @@ namespace NavySpade.Entities
 
             ResetPosition();
 
-            agent.speed = Source.data.speed;
-            agent.stoppingDistance = stoppingDistance;
-
             inputReceiver = GetComponent<HeroInputReceiver>();
             inputReceiver.TargetSelected += MoveTo;
+
+            handler = GetComponent<IMovementHandler>();
+            handler.Init(Source.data.speed, stoppingDistance);
         }
 
         private void MoveTo(Vector3 target)
         {
             var newDestination = new Vector3(target.x, 0f, target.z);
-            if (agent.SetDestination(newDestination))
+            if (handler.TryToSetDestination(newDestination))
             {
                 destination = newDestination;
                 isMoving = true;
@@ -72,7 +73,7 @@ namespace NavySpade.Entities
 
             var position = new Vector3(startPoint.transform.position.x, 0f, startPoint.transform.position.z);
             transform.position = position;
-            agent.SetDestination(position);
+            handler.SetPosition(position);
         }
     }
 }

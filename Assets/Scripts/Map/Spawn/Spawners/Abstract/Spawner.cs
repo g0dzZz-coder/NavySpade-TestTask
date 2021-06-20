@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace NavySpade
 {
@@ -14,9 +13,6 @@ namespace NavySpade
         [SerializeField] protected MapGenerator generator = null;
         [SerializeField] protected K spawnableEntity;
         [SerializeField] protected Transform root = null;
-
-        public UnityEvent<T> EntitySpawned;
-        public UnityEvent<T> EntityDestroed;
 
         public K Data => spawnableEntity;
         public ObservableCollection<T> SpawnedObjects { get; private set; } = new ObservableCollection<T>();
@@ -31,14 +27,7 @@ namespace NavySpade
 
             SpawnedObjects.Add(entity);
 
-            EntitySpawned?.Invoke(entity);
-
             return entity;
-        }
-
-        private void OnEntityDestroyed(EntityBase<K> entity)
-        {
-            SpawnedObjects.Remove(entity as T);
         }
 
         public void OnMapUpdated(List<Tile> tiles, int amount)
@@ -79,6 +68,11 @@ namespace NavySpade
 
                 Spawn(freePlace);
             }
+        }
+
+        private void OnEntityDestroyed(EntityBase<K> entity)
+        {
+            SpawnedObjects.Remove(entity as T);
         }
     }
 }

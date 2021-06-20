@@ -6,8 +6,9 @@ namespace NavySpade.Entities
     {
         [SerializeField] private float initialHeight = 0.5f;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             transform.position = new Vector3(transform.position.x, initialHeight, transform.position.z);
         }
     }

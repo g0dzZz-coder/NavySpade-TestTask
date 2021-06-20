@@ -18,5 +18,5 @@ MonoBehaviour:
   spawnDelay: {x: 3, y: 3}
   speed: 2
   damage: 1
-  wanderRadius: 4
-  wanderDuration: 5
+  wanderRadius: 10
+  wanderDuration: 2

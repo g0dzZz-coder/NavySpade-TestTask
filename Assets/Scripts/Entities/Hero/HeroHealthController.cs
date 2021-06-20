@@ -8,9 +8,10 @@ namespace NavySpade.Entities
     {
         public int Health { get; private set; }
         public bool IsInvulnerable { get; private set; }
-
+        
         public event Action<int> HealthUpdated;
         public event Action Died;
+        public event Action<bool> InvulnerableUpdated;
 
         private HeroData data;
 
@@ -19,6 +20,8 @@ namespace NavySpade.Entities
             this.data = data;
             Health = data.startHealth;
             HealthUpdated?.Invoke(Health);
+
+            SetInvulnerable(false);
         }
 
         public void TakeDamage(int value)
@@ -27,10 +30,6 @@ namespace NavySpade.Entities
                 return;
 
             SetHealth(Health - value);
-
-            if (IsInvulnerable)
-                return;
-
             StartCoroutine(EnableInvulnerability());
         }
 
@@ -58,7 +57,7 @@ namespace NavySpade.Entities
 
         private IEnumerator EnableInvulnerability()
         {
-            IsInvulnerable = true;
+            SetInvulnerable(true);
 
             var duration = 0f;
             while (duration < data.durationOfInvulnerability)
@@ -67,7 +66,13 @@ namespace NavySpade.Entities
                 yield return new WaitForFixedUpdate();
             }
 
-            IsInvulnerable = false;
+            SetInvulnerable(false);
+        }
+
+        private void SetInvulnerable(bool enable)
+        {
+            IsInvulnerable = enable;
+            InvulnerableUpdated?.Invoke(IsInvulnerable);
         }
     }
 }

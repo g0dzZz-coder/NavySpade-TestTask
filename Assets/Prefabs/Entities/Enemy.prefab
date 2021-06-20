@@ -104,9 +104,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4253499726850108204}
   - component: {fileID: 5473253938147933600}
+  - component: {fileID: 2401071525993806748}
+  - component: {fileID: 8567738358838360755}
   - component: {fileID: 1885883053534221754}
   - component: {fileID: 4253499726850108207}
-  - component: {fileID: 8631340794014397267}
+  - component: {fileID: 6477235509232919194}
+  - component: {fileID: 3406924386454215253}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -143,7 +146,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 690c6f395abe4b9409b7686dd6b2a797, type: 2}
+--- !u!114 &2401071525993806748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253499726850108192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5498631d75a60624385332abcc3aeea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   agent: {fileID: 1885883053534221754}
+--- !u!114 &8567738358838360755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253499726850108192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d624b008d2b8b4142920ff1939bf22cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings:
+    duration: 0.5
 --- !u!195 &1885883053534221754
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -174,7 +203,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4253499726850108192}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!136 &8631340794014397267
+--- !u!136 &6477235509232919194
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,10 +213,26 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.4
+  m_Radius: 0.35
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &3406924386454215253
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253499726850108192}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4666301029100080937
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,19 +24,15 @@ namespace NavySpade.UI
 
         public override void Enable()
         {
+            lastScoreText.text = Player.Score.ToString();
+            bestScoreText.text = SaveSystem.GetBestScore().ToString();
+
             base.Enable();
-
-            var lastScore = Player.Score;
-            var bestScore = SaveSystem.GetBestScore();
-
-            lastScoreText.text = lastScore.ToString();
-            bestScoreText.text = bestScore.ToString();
         }
 
         private void OnRestartButtonClicked()
         {
             Disable();
-
             Level.Instance.Restart();
         }
     }

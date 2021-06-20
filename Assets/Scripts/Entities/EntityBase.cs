@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using System;
-using DG.Tweening;
+﻿using System;
+using UnityEngine;
 
 namespace NavySpade.Entities
 {
+    using Animation;
+
     [RequireComponent(typeof(Collider))]
     public class EntityBase<T> : MonoBehaviour
     {
@@ -11,15 +12,16 @@ namespace NavySpade.Entities
 
         public event Action<EntityBase<T>> Destroyed;
 
-        private Collider _collider;
+        protected Collider Collider { get; private set; }
 
-        protected virtual void Start()
+        protected virtual void Awake()
         {
-            _collider = GetComponent<Collider>();
+            Collider = GetComponent<Collider>();
+        }
 
-            var targetScale = transform.localScale;
-            transform.localScale = Vector3.zero;
-            transform.DOScale(targetScale, 0.5f);
+        private void OnEnable()
+        {
+            AnimationExtensions.Show(transform);
         }
 
         private void OnDestroy()
@@ -29,8 +31,8 @@ namespace NavySpade.Entities
 
         public virtual void Destroy()
         {
-            _collider.isTrigger = true;
-            transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => Destroy(gameObject));
+            Collider.isTrigger = true;
+            AnimationExtensions.Hide(transform, () => Destroy(gameObject));
         }
     }
 }

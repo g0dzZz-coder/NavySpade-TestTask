@@ -11,9 +11,11 @@ namespace NavySpade.Entities
 
         public HeroHealthController HealthController => healthController;
 
-        private void Awake()
+        protected override void Awake()
         {
-            GetComponent<Collider>().isTrigger = true;
+            base.Awake();
+
+            Collider.isTrigger = false;
             GetComponent<Rigidbody>().useGravity = false;
 
             Level.Instance.Restarted += ResetState;
