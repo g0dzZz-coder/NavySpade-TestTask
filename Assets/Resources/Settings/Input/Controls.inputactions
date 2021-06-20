@@ -20,14 +20,6 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "Back",
-                    "type": "Button",
-                    "id": "6f6c9485-b5bc-4658-a0dd-3468cb7f6d5d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -74,10 +66,26 @@
                     "action": "PointerPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "60ae4ac3-da54-4995-9a56-f7b07f259ab3",
+            "actions": [
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "7d25481c-9346-43c3-9cc0-525384305529",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "3cb0b885-1bed-4869-b9ea-7977c684ff00",
+                    "id": "a679f561-6889-4f2a-91b9-cab90757da47",
                     "path": "*/{Back}",
                     "interactions": "",
                     "processors": "",

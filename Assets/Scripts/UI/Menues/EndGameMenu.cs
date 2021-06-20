@@ -20,18 +20,6 @@ namespace NavySpade.UI
                 restartButton.onClick.AddListener(OnRestartButtonClicked);
 
             Level.Instance.GameEnded += Enable;
-
-            var controls = new Controls();
-            controls.Hero.Back.Enable();
-            controls.Hero.Back.performed += context => Toggle();
-        }
-
-        private void Toggle()
-        {
-            if (menuRoot.gameObject.activeSelf)
-                Disable();
-            else
-                Enable();
         }
 
         public override void Enable()

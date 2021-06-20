@@ -10,24 +10,27 @@ namespace NavySpade.Map
         [SerializeField] private MapSettings settings = null;
         [SerializeField] private Transform root = null;
 
-        public event Action<List<Tile>> MapUpdated;
+        public List<Tile> Tiles { get; private set; } = new List<Tile>();
+        public List<EnemySpawnZone> SpawnZones { get; private set; } = new List<EnemySpawnZone>();
 
         private Transform Root => root ? root : transform;
 
-        private List<Tile> tiles = new List<Tile>();
+        public event Action<List<Tile>> MapUpdated;
 
         public void OnRestarted()
         {
-            tiles = GetComponentsInChildren<Tile>().ToList();
-            MapUpdated?.Invoke(tiles);
+            Tiles = Root.GetComponentsInChildren<Tile>().ToList();
+            SpawnZones = Root.GetComponentsInChildren<EnemySpawnZone>().ToList();
+
+            MapUpdated?.Invoke(Tiles);
         }
 
         public List<Tile> GetFreeTiles()
         {
-            if (tiles == null || tiles.Count == 0)
-                tiles = GetComponentsInChildren<Tile>().ToList();
+            if (Tiles == null || Tiles.Count == 0)
+                Tiles = Root.GetComponentsInChildren<Tile>().ToList();
 
-            var freeTiles = tiles.Where(x => x.IsFree).ToList();
+            var freeTiles = Tiles.Where(x => x.IsFree).ToList();
 
             return freeTiles;
         }
@@ -47,14 +50,19 @@ namespace NavySpade.Map
             {
                 for (var z = 0; z < settings.mapSize.y; z++)
                 {
-                    tiles.Add(CreateTile(x, z));
+                    var prefab = settings.GetRandomPrefab();
+                    if (prefab is Tile)
+                        CreateTile(prefab as Tile, x, z);
+                    else
+                        CreateSpawnZone(prefab as EnemySpawnZone, x, z);
+
                     i++;
                 }
             }
 
-            MapUpdated?.Invoke(tiles);
+            MapUpdated?.Invoke(Tiles);
 
-            Debug.Log($"Map Generated. Number of tiles = {i}");
+            Debug.Log($"Map Generated. Number of Tiles = {i}");
 
             //if (Application.isPlaying)
             //    NavMeshBuilder.BuildNavMesh();
@@ -64,10 +72,11 @@ namespace NavySpade.Map
         {
             if (Application.isEditor)
             {
-                tiles = GetComponentsInChildren<Tile>().ToList();
+                Tiles = Root.GetComponentsInChildren<Tile>().ToList();
+                SpawnZones = Root.GetComponentsInChildren<EnemySpawnZone>().ToList();
             }
 
-            foreach (Tile tile in tiles)
+            foreach (Tile tile in Tiles)
             {
                 if (Application.isEditor)
                     DestroyImmediate(tile.gameObject);
@@ -75,23 +84,42 @@ namespace NavySpade.Map
                     Destroy(tile.gameObject);
             }
 
-            tiles.Clear();
+            Tiles.Clear();
+
+            foreach (EnemySpawnZone zone in SpawnZones)
+            {
+                if (Application.isEditor)
+                    DestroyImmediate(zone.gameObject);
+                else
+                    Destroy(zone.gameObject);
+            }
+
+            SpawnZones.Clear();
         }
 
-        private Tile CreateTile(int x, int z)
+        private void CreateTile(Tile prefab, int x, int z)
         {
-            var tileScale = settings.tilePrefab.transform.localScale;
-            var position = new Vector3(-settings.mapSize.x / 2f + tileScale.x + x, -tileScale.y / 2f, -settings.mapSize.y / 2f + tileScale.z + z);
+            var scale = prefab.transform.localScale;
+            var position = new Vector3(-settings.mapSize.x / 2f + scale.x + x, -scale.y / 2f, -settings.mapSize.y / 2f + scale.z + z);
+            var tile = Instantiate(prefab, position, Quaternion.identity, Root);
+            tile.gameObject.name += $": [{x};{z}]";
 
-            var newTile = Instantiate(settings.tilePrefab, position, Quaternion.identity, Root);
-            newTile.gameObject.name += $": [{x};{z}]";
+            Tiles.Add(tile);
+        }
 
-            return newTile;
+        private void CreateSpawnZone(EnemySpawnZone prefab, int x, int z)
+        {
+            var scale = prefab.transform.localScale;
+            var position = new Vector3(-settings.mapSize.x / 2f + scale.x + x, -scale.y / 2f, -settings.mapSize.y / 2f + scale.z + z);
+            var spawnZone = Instantiate(prefab, position, Quaternion.identity, Root);
+            spawnZone.gameObject.name += $": [{x};{z}]";
+
+            SpawnZones.Add(spawnZone);
         }
 
         private bool IsValid()
         {
-            if (tiles.Count < settings.mapSize.x * settings.mapSize.y)
+            if (Tiles.Count + SpawnZones.Count < settings.mapSize.x * settings.mapSize.y)
                 return false;
 
             return true;

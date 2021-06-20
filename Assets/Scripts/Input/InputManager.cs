@@ -16,13 +16,20 @@
         }
         private Controls controls;
 
-        protected override void Awake()
+        private void OnEnable()
         {
-            base.Awake();
             Controls.Enable();
 
-            Level.Instance.Restarted += Controls.Enable;
-            Level.Instance.GameEnded += Controls.Disable;
+            Level.Instance.Restarted += Controls.Hero.Enable;
+            Level.Instance.GameEnded += Controls.Hero.Disable;
+        }
+
+        private void OnDisable()
+        {
+            Controls.Disable();
+
+            Level.Instance.Restarted -= Controls.Hero.Enable;
+            Level.Instance.GameEnded -= Controls.Hero.Disable;
         }
     }
 }

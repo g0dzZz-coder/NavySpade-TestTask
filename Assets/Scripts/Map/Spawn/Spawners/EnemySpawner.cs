@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace NavySpade.Map
@@ -36,13 +37,11 @@ namespace NavySpade.Map
 
         private IEnumerator PeriodicSpawn()
         {
-            var freeTiles = generator.GetFreeTiles();
-
-            if (freeTiles.Count > 0)
+            if (generator.SpawnZones.Count > 0)
             {
                 while (SpawnedObjects.Count < spawnableEntity.startAmount)
                 {
-                    var freePlace = freeTiles.Random();
+                    var freePlace = generator.SpawnZones.Random();
 
                     yield return new WaitForSeconds(spawnableEntity.GetSpawnDelay());
 

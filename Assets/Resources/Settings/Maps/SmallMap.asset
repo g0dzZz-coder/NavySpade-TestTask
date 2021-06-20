@@ -15,4 +15,6 @@ MonoBehaviour:
   mapSize: {x: 20, y: 20}
   tilePrefab: {fileID: 1953602117550633269, guid: 18e28f82d9f9c1c48ae7ca2cc034d559,
     type: 3}
-  outlinePrecent: 0
+  spawnZonePrefab: {fileID: 7505028928048296481, guid: 21b31512eb177c34396240225d48daf0,
+    type: 3}
+  spawnZoneFraquency: 0.1

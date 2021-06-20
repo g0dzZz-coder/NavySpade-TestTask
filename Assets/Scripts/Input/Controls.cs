@@ -33,14 +33,6 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""Back"",
-                    ""type"": ""Button"",
-                    ""id"": ""6f6c9485-b5bc-4658-a0dd-3468cb7f6d5d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -87,10 +79,26 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""PointerPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""60ae4ac3-da54-4995-9a56-f7b07f259ab3"",
+            ""actions"": [
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d25481c-9346-43c3-9cc0-525384305529"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""3cb0b885-1bed-4869-b9ea-7977c684ff00"",
+                    ""id"": ""a679f561-6889-4f2a-91b9-cab90757da47"",
                     ""path"": ""*/{Back}"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -130,7 +138,9 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Hero = asset.FindActionMap("Hero", throwIfNotFound: true);
         m_Hero_Click = m_Hero.FindAction("Click", throwIfNotFound: true);
         m_Hero_PointerPosition = m_Hero.FindAction("PointerPosition", throwIfNotFound: true);
-        m_Hero_Back = m_Hero.FindAction("Back", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -182,14 +192,12 @@ public class @Controls : IInputActionCollection, IDisposable
     private IHeroActions m_HeroActionsCallbackInterface;
     private readonly InputAction m_Hero_Click;
     private readonly InputAction m_Hero_PointerPosition;
-    private readonly InputAction m_Hero_Back;
     public struct HeroActions
     {
         private @Controls m_Wrapper;
         public HeroActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Click => m_Wrapper.m_Hero_Click;
         public InputAction @PointerPosition => m_Wrapper.m_Hero_PointerPosition;
-        public InputAction @Back => m_Wrapper.m_Hero_Back;
         public InputActionMap Get() { return m_Wrapper.m_Hero; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -205,9 +213,6 @@ public class @Controls : IInputActionCollection, IDisposable
                 @PointerPosition.started -= m_Wrapper.m_HeroActionsCallbackInterface.OnPointerPosition;
                 @PointerPosition.performed -= m_Wrapper.m_HeroActionsCallbackInterface.OnPointerPosition;
                 @PointerPosition.canceled -= m_Wrapper.m_HeroActionsCallbackInterface.OnPointerPosition;
-                @Back.started -= m_Wrapper.m_HeroActionsCallbackInterface.OnBack;
-                @Back.performed -= m_Wrapper.m_HeroActionsCallbackInterface.OnBack;
-                @Back.canceled -= m_Wrapper.m_HeroActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_HeroActionsCallbackInterface = instance;
             if (instance != null)
@@ -218,13 +223,43 @@ public class @Controls : IInputActionCollection, IDisposable
                 @PointerPosition.started += instance.OnPointerPosition;
                 @PointerPosition.performed += instance.OnPointerPosition;
                 @PointerPosition.canceled += instance.OnPointerPosition;
+            }
+        }
+    }
+    public HeroActions @Hero => new HeroActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Back;
+    public struct UIActions
+    {
+        private @Controls m_Wrapper;
+        public UIActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Back => m_Wrapper.m_UI_Back;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Back.started -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
             }
         }
     }
-    public HeroActions @Hero => new HeroActions(this);
+    public UIActions @UI => new UIActions(this);
     private int m_MobileSchemeIndex = -1;
     public InputControlScheme MobileScheme
     {
@@ -238,6 +273,9 @@ public class @Controls : IInputActionCollection, IDisposable
     {
         void OnClick(InputAction.CallbackContext context);
         void OnPointerPosition(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
         void OnBack(InputAction.CallbackContext context);
     }
 }

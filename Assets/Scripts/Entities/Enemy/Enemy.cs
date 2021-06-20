@@ -28,16 +28,8 @@ namespace NavySpade.Entities
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out HeroHealthController hero))
-                OnContactWithHero(hero);
-            else if (other.TryGetComponent(out Crystal crystal))
+            if (other.TryGetComponent(out Crystal crystal))
                 OnContactWithCrystal(crystal);
-        }
-
-        private void OnContactWithHero(HeroHealthController hero)
-        {
-            hero.TakeDamage(data.damage);
-            Destroy();
         }
 
         private void OnContactWithCrystal(Crystal crystal)

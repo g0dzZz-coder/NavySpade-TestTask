@@ -7,11 +7,11 @@ namespace NavySpade.Entities
     public class HeroHealthController : MonoBehaviour
     {
         public int Health { get; private set; }
+        public bool IsInvulnerable { get; private set; }
 
         public event Action<int> HealthUpdated;
         public event Action Died;
 
-        private bool isInvulnerable = false;
         private HeroData data;
 
         public void Init(HeroData data)
@@ -23,12 +23,12 @@ namespace NavySpade.Entities
 
         public void TakeDamage(int value)
         {
-            if (isInvulnerable || value < 1)
+            if (IsInvulnerable || value < 1)
                 return;
 
             SetHealth(Health - value);
 
-            if (isInvulnerable)
+            if (IsInvulnerable)
                 return;
 
             StartCoroutine(EnableInvulnerability());
@@ -58,7 +58,7 @@ namespace NavySpade.Entities
 
         private IEnumerator EnableInvulnerability()
         {
-            isInvulnerable = true;
+            IsInvulnerable = true;
 
             var duration = 0f;
             while (duration < data.durationOfInvulnerability)
@@ -67,7 +67,7 @@ namespace NavySpade.Entities
                 yield return new WaitForFixedUpdate();
             }
 
-            isInvulnerable = false;
+            IsInvulnerable = false;
         }
     }
 }

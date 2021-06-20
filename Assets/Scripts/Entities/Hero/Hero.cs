@@ -21,8 +21,19 @@ namespace NavySpade.Entities
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.TryGetComponent(out Enemy enemy))
+                OnContactWithEnemy(enemy);
             if (other.TryGetComponent(out Crystal crystal))
                 OnContactWithCrystal(crystal);
+        }
+
+        private void OnContactWithEnemy(Enemy enemy)
+        {
+            if (healthController.IsInvulnerable)
+                return;
+
+            healthController.TakeDamage(enemy.data.damage);
+            enemy.Destroy();
         }
 
         private void OnContactWithCrystal(Crystal crystal)
