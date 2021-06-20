@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Specialized;
 using TMPro;
 using UnityEngine;
 
 namespace NavySpade.UI
 {
     using Map;
+    using Utils;
 
     [Serializable]
-    public class InfoUI
+    public class LevelInfoUI
     {
         public TMP_Text countText = null;
         public TMP_Text distanceText = null;
@@ -15,28 +17,63 @@ namespace NavySpade.UI
 
     public class LevelUI : MonoBehaviour
     {
-        [SerializeField] private CrystalSpawner crystalSpawner = null;
-        [SerializeField] private InfoUI crystalInfo = null;
+        [SerializeField] private Transform hero = null;
 
-        [SerializeField] private EnemySpawner enemySpawner = null;
-        [SerializeField] private InfoUI enemyInfo = null;
+        [SerializeField] private CrystalSpawner crystalContainer = null;
+        [SerializeField] private LevelInfoUI crystalInfo = null;
 
-        private void Awake()
+        [SerializeField] private EnemySpawner enemyContainer = null;
+        [SerializeField] private LevelInfoUI enemyInfo = null;
+
+        private void LateUpdate()
         {
-            crystalSpawner.EntitySpanwed.AddListener(UpdateCrystalInfo);
-            enemySpawner.EntitySpanwed.AddListener(UpdateEnemyInfo);
+            OnCrystalDistanceChanged(crystalContainer.SpawnedObjects.GetClosestDistance(hero.position));
+            OnEnemyDistanceChanged(enemyContainer.SpawnedObjects.GetClosestDistance(hero.position));
         }
 
-        private void UpdateCrystalInfo()
+        private void OnEnable()
         {
-            crystalInfo.countText.text = crystalSpawner.SpawnedObjects.Count.ToString();
-            crystalInfo.distanceText.text = "";
+            OnCrystalCountChanged(null, null);
+            OnEnemyCountChanged(null, null);
+            crystalContainer.SpawnedObjects.CollectionChanged += OnCrystalCountChanged;
+            enemyContainer.SpawnedObjects.CollectionChanged += OnEnemyCountChanged;
         }
 
-        private void UpdateEnemyInfo()
+        private void OnDisable()
         {
-            enemyInfo.countText.text = enemySpawner.SpawnedObjects.Count.ToString();
-            enemyInfo.distanceText.text = "";
+            crystalContainer.SpawnedObjects.CollectionChanged -= OnCrystalCountChanged;
+            enemyContainer.SpawnedObjects.CollectionChanged -= OnEnemyCountChanged;
+        }
+
+        private void OnCrystalCountChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            crystalInfo.countText.text = $"x{crystalContainer.SpawnedObjects.Count}";
+        }
+
+        private void OnEnemyCountChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            enemyInfo.countText.text = $"x{enemyContainer.SpawnedObjects.Count}";
+        }
+
+        private void OnCrystalDistanceChanged(float distance)
+        {
+            crystalInfo.distanceText.text = PrepareDistanceValue(distance).ToString();
+        }
+
+        private void OnEnemyDistanceChanged(float distance)
+        {
+            enemyInfo.distanceText.text = PrepareDistanceValue(distance).ToString();
+        }
+
+        private int PrepareDistanceValue(float distance)
+        {
+            int value;
+            if (distance > int.MaxValue)
+                value = 0;
+            else
+                value = Mathf.RoundToInt(distance);
+
+            return value;
         }
     }
 }

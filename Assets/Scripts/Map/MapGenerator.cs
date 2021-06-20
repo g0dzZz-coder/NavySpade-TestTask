@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.AI;
 using UnityEngine;
 
@@ -10,11 +11,19 @@ namespace NavySpade.Map
         [SerializeField] private MapSettings settings = null;
         [SerializeField] private Transform root = null;
 
-        public List<Tile> Tiles { get; private set; } = new List<Tile>();
-
         public event Action<List<Tile>> MapUpdated;
 
         private Transform Root => root ? root : transform;
+
+        private List<Tile> tiles = new List<Tile>();
+
+        public List<Tile> GetTiles()
+        {
+            if (tiles == null || tiles.Count == 0)
+                return GetComponentsInChildren<Tile>().ToList();
+
+            return tiles;
+        }
 
         public void GenerateMap()
         {
@@ -31,12 +40,12 @@ namespace NavySpade.Map
             {
                 for (var z = 0; z < settings.mapSize.y; z++)
                 {
-                    Tiles.Add(CreateTile(x, z));
+                    tiles.Add(CreateTile(x, z));
                     i++;
                 }
             }
 
-            MapUpdated?.Invoke(Tiles);
+            MapUpdated?.Invoke(tiles);
 
             Debug.Log($"Map Generated. Number of tiles = {i}");
 
@@ -65,12 +74,12 @@ namespace NavySpade.Map
                     DestroyImmediate(Root.GetChild(i).gameObject);
             }
 
-            Tiles.Clear();
+            tiles.Clear();
         }
 
         private bool IsValid()
         {
-            if (Tiles.Count < settings.mapSize.x * settings.mapSize.y)
+            if (tiles.Count < settings.mapSize.x * settings.mapSize.y)
                 return false;
 
             return true;

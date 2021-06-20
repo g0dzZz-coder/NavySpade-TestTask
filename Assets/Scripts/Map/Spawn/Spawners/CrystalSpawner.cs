@@ -1,36 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace NavySpade.Map
 {
     using Entities;
     using Utils;
 
-    public class EnityCollection: List<Crystal>
-    {
-        public event Action<int> CountChanged;
-
-        public new void Add(Crystal crystal)
-        {
-            base.Add(crystal);
-            CountChanged?.Invoke(Count);
-        }
-
-        public new void Remove(Crystal crystal)
-        {
-            base.Add(crystal);
-            CountChanged?.Invoke(Count);
-        }
-    }
-
     public class CrystalSpawner : Spawner<Crystal, CrystalData>
     {
         private Coroutine spawnCoroutine;
 
-        private void Awake()
+        private void Start()
         {
+            OnMapUpdated(generator.GetTiles(), spawnableEntity.startAmount);
+
             generator.MapUpdated += spawnZones => OnMapUpdated(spawnZones, spawnableEntity.startAmount);
         }
 
@@ -46,21 +29,22 @@ namespace NavySpade.Map
             SpawnedObjects[SpawnedObjects.Count - 1].Destroyed += OnCrystalDestroyed;
         }
 
-        private IEnumerator SpawnMissing()
+        private IEnumerator PeriodicSpawn()
         {
             while (SpawnedObjects.Count < spawnableEntity.startAmount)
             {
                 var delay = spawnableEntity.GetSpawnDelay();
 
-                var freePlace = generator.Tiles.Random();
+                var freePlace = generator.GetTiles().Random();
                 if (freePlace == null || freePlace.IsPlaceTaken)
                     continue;
 
                 yield return new WaitForSeconds(delay);
 
                 Spawn(freePlace);
-                spawnCoroutine = null;
             }
+
+            spawnCoroutine = null;
         }
 
         private void OnCrystalDestroyed(EntityBase<CrystalData> crystal)
@@ -75,7 +59,7 @@ namespace NavySpade.Map
                 if (spawnCoroutine != null)
                     return;
 
-                spawnCoroutine = StartCoroutine(SpawnMissing());
+                spawnCoroutine = StartCoroutine(PeriodicSpawn());
             }
         }
     }

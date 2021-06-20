@@ -7,5 +7,12 @@ namespace NavySpade.Entities
     {
         [Header("Spawn")]
         public int startAmount = 10;
+        [MinMaxSlider(0f, 60f)]
+        [SerializeField] private Vector2 spawnDelay = new Vector2(5f, 5f);
+
+        public float GetSpawnDelay()
+        {
+            return Random.Range(spawnDelay.x, spawnDelay.y);
+        }
     }
 }

@@ -21,6 +21,11 @@ namespace NavySpade.Editor
                 var tiles = FindObjectsOfType<Tile>();
                 spawner.OnMapUpdated(tiles.ToList(), spawner.Data.startAmount);
             }
+
+            if (GUILayout.Button("Clear"))
+            {
+                spawner.RemoveAllObjects();
+            }
         }
     }
 }

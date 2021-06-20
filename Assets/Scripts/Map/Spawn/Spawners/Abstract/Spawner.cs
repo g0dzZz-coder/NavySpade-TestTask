@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,37 +7,19 @@ namespace NavySpade
 {
     using Entities;
     using Map;
-    using System;
     using Utils;
 
     public abstract class Spawner<T, K> : MonoBehaviour where T : EntityBase<K> where K : EntityData
     {
-        public class EnityCollection : List<T>
-        {
-            public event Action<int> CountChanged;
-
-            public new void Add(T crystal)
-            {
-                base.Add(crystal);
-                CountChanged?.Invoke(Count);
-            }
-
-            public new void Remove(T crystal)
-            {
-                base.Add(crystal);
-                CountChanged?.Invoke(Count);
-            }
-        }
-
         [SerializeField] protected MapGenerator generator = null;
         [SerializeField] protected K spawnableEntity;
         [SerializeField] protected Transform root = null;
 
-        public UnityEvent EntitySpanwed;
+        public UnityEvent<T> EntitySpawned;
+        public UnityEvent<T> EntityDestroed;
 
         public K Data => spawnableEntity;
-        public EnityCollection SpawnedObjects { get; private set; } = new EnityCollection();
-        protected Tile[] SpawnZones { get; private set; }
+        public ObservableCollection<T> SpawnedObjects { get; private set; } = new ObservableCollection<T>();
 
         protected virtual void Spawn(SpawnZone parent)
         {
@@ -44,15 +27,40 @@ namespace NavySpade
             entity.transform.SetParent(root);
             parent.SetChild(entity.gameObject);
 
+            entity.Destroyed += OnEntityDestroyed;
             SpawnedObjects.Add(entity);
 
-            EntitySpanwed?.Invoke();
+            EntitySpawned?.Invoke(entity);
+        }
+
+        private void OnEntityDestroyed(EntityBase<K> entity)
+        {
+            SpawnedObjects.Remove(entity as T);
         }
 
         public void OnMapUpdated(List<Tile> tiles, int amount)
         {
             RemoveAllObjects();
             SpawnMissing(tiles, amount);
+        }
+
+        public void RemoveAllObjects()
+        {
+            if (Application.isEditor)
+            {
+                foreach (var child in transform.GetComponentsInChildren<T>())
+                    DestroyImmediate(child.gameObject);
+
+                return;
+            }
+
+            foreach (var obj in SpawnedObjects)
+            {
+                try { Destroy(obj.gameObject); }
+                catch { }
+            }
+
+            SpawnedObjects.Clear();
         }
 
         protected void SpawnMissing(List<Tile> tiles, int requiredQuantity)
@@ -64,22 +72,7 @@ namespace NavySpade
                     continue;
 
                 Spawn(freePlace);
-
-                Debug.Log(1);
             }
-        }
-
-        protected void RemoveAllObjects()
-        {
-            foreach (var obj in SpawnedObjects)
-            {
-                if (Application.isPlaying)
-                    Destroy(obj.gameObject);
-                else
-                    DestroyImmediate(obj.gameObject);
-            }
-
-            SpawnedObjects.Clear();
         }
     }
 }

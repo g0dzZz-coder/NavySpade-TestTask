@@ -8,7 +8,7 @@ namespace NavySpade.Entities
     {
         [SerializeField] private NavMeshAgent navAgent = null;
         [SerializeField] private HeroAnimationController animator = null;
-        [SerializeField] private float stopDistance = 0.1f;
+        [SerializeField] private float stoppingDistance = 0.25f;
 
         public Hero Source { get; private set; }
 
@@ -18,7 +18,7 @@ namespace NavySpade.Entities
         private void Update()
         {
             var distance = Vector3.Distance(destination, transform.position);
-            if (distance < stopDistance)
+            if (distance < stoppingDistance)
                 StopRun();
         }
 
@@ -27,14 +27,10 @@ namespace NavySpade.Entities
             Source = source;
 
             inputReceiver = GetComponent<HeroInputReceiver>();
-            inputReceiver.TargetSelected += OnTargetSelected;
+            inputReceiver.TargetSelected += MoveTo;
 
             navAgent.speed = Source.data.Speed;
-        }
-
-        private void OnTargetSelected(Vector3 position)
-        {
-            MoveTo(position);
+            navAgent.stoppingDistance = stoppingDistance;
         }
 
         private void MoveTo(Vector3 target)

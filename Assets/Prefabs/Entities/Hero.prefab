@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6828103506408306365}
   - component: {fileID: 3896302904850394124}
   - component: {fileID: 1633132316495121048}
-  - component: {fileID: 1774885323927532915}
   - component: {fileID: 3097106427449106680}
   - component: {fileID: 8375978311448007445}
   - component: {fileID: 166993767777426241}
@@ -55,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 6bdc2d22d43fa1d4a939f54ae8e67175, type: 2}
   movementController: {fileID: 3896302904850394124}
+  startPosition: {fileID: 0}
 --- !u!114 &3896302904850394124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navAgent: {fileID: 8828785731076960757}
   animator: {fileID: 3097106427449106680}
+  stoppingDistance: 0.25
 --- !u!114 &1633132316495121048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,18 +83,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
---- !u!114 &1774885323927532915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8375978311448007446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17100a7ecb83f31479ea812882415446, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3097106427449106680
 MonoBehaviour:
   m_ObjectHideFlags: 0

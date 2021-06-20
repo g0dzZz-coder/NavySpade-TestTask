@@ -19,6 +19,7 @@ namespace NavySpade
             if (last == null)
                 return;
 
+            parent.SetChild(last.gameObject);
             last.SetRandomHeight();
         }
     }
