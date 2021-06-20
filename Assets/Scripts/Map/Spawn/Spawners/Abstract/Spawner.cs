@@ -21,13 +21,16 @@ namespace NavySpade
         public K Data => spawnableEntity;
         public ObservableCollection<T> SpawnedObjects { get; private set; } = new ObservableCollection<T>();
 
-        protected virtual void Spawn(SpawnZone parent)
+        protected virtual void Spawn(Tile parent)
         {
             var entity = Instantiate(spawnableEntity.prefab, parent.transform).GetComponent<T>();
             entity.transform.SetParent(root);
-            parent.SetChild(entity.gameObject);
 
             entity.Destroyed += OnEntityDestroyed;
+
+            parent.SetChild(entity.transform);
+            entity.Destroyed += x => parent.UnsetChild();
+
             SpawnedObjects.Add(entity);
 
             EntitySpawned?.Invoke(entity);
@@ -48,16 +51,16 @@ namespace NavySpade
         {
             if (Application.isEditor)
             {
-                foreach (var child in transform.GetComponentsInChildren<T>())
+                foreach (var child in transform.parent.GetComponentsInChildren<T>())
                     DestroyImmediate(child.gameObject);
-
-                return;
             }
-
-            foreach (var obj in SpawnedObjects)
+            else
             {
-                try { Destroy(obj.gameObject); }
-                catch { }
+                foreach (var obj in SpawnedObjects)
+                {
+                    try { Destroy(obj.gameObject); }
+                    catch { }
+                }
             }
 
             SpawnedObjects.Clear();
@@ -65,10 +68,13 @@ namespace NavySpade
 
         protected void SpawnMissing(List<Tile> tiles, int requiredQuantity)
         {
+            if (tiles == null || tiles.Count == 0)
+                return;
+
             while (SpawnedObjects.Count < requiredQuantity)
             {
                 var freePlace = tiles.Random();
-                if (freePlace == null || freePlace.IsPlaceTaken)
+                if (freePlace == null || freePlace.IsFree == false)
                     continue;
 
                 Spawn(freePlace);

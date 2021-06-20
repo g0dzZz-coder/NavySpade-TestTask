@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8375978311448007446, guid: 1bd42b33596c40246aef4626a17d25d4, type: 3}
   icon: {fileID: 0}
-  Lives: 3
-  Speed: 1
+  startHealth: 3
+  maxHealth: 3
+  speed: 3
+  isInvulnerable: 1
+  durationOfInvulnerability: 3

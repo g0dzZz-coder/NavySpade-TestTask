@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace NavySpade.UI
 {
     using Core;
-    using TMPro;
-    using UnityEngine.UI;
 
     public class EndGameMenu : MenuBase
     {
@@ -13,11 +13,14 @@ namespace NavySpade.UI
 
         private void Awake()
         {
-            gameObject.SetActive(false);
             Disable();
 
             if (restartButton)
                 restartButton.onClick.AddListener(OnRestartButtonClicked);
+
+            var controls = new Controls();
+            controls.Hero.Back.Enable();
+            controls.Hero.Back.performed += context => Toggle();
         }
 
         private void OnEnable()
@@ -28,6 +31,14 @@ namespace NavySpade.UI
         private void OnDisable()
         {
             Game.Ended -= Enable;
+        }
+
+        private void Toggle()
+        {
+            if (menuRoot.gameObject.activeSelf)
+                Disable();
+            else
+                Enable();
         }
 
         private void Enable(bool win)

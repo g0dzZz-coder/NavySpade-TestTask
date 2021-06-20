@@ -4,14 +4,38 @@ namespace NavySpade.Map
 {
     using Entities;
 
-    public class Tile : SpawnZone, ISelectable
+    public class Tile : MonoBehaviour, ISelectable
     {
-        public bool IsFreeToMove()
-        {
-            if (Child.GetComponent<Obstacle>())
-                return false;
+        public bool IsFree => child == null;
 
-            return true;
+        private Transform child = null;
+
+        private void Start()
+        {
+            if (transform.childCount > 0)
+                child = GetComponentInChildren<Transform>();
+        }
+
+        public void SetChild(Transform child)
+        {
+            this.child = child;
+            child.SetParent(transform);
+        }
+
+        public void UnsetChild()
+        {
+            child = null; 
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = IsFree ? Color.green:  Color.red;
+            Gizmos.matrix = transform.localToWorldMatrix;
+
+            var center = new Vector3(0, transform.localScale.y/2f, 0f);
+            var size = new Vector3(transform.localScale.x, 0, transform.localScale.z);
+
+            Gizmos.DrawWireCube(center, size);
         }
     }
 }

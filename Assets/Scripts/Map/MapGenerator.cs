@@ -17,12 +17,14 @@ namespace NavySpade.Map
 
         private List<Tile> tiles = new List<Tile>();
 
-        public List<Tile> GetTiles()
+        public List<Tile> GetFreeTiles()
         {
             if (tiles == null || tiles.Count == 0)
-                return GetComponentsInChildren<Tile>().ToList();
+                tiles = GetComponentsInChildren<Tile>().ToList();
 
-            return tiles;
+            var freeTiles = tiles.Where(x => x.IsFree).ToList();
+
+            return freeTiles;
         }
 
         public void GenerateMap()
@@ -53,6 +55,24 @@ namespace NavySpade.Map
                 NavMeshBuilder.BuildNavMesh();
         }
 
+        public void Clear()
+        {
+            if (Application.isEditor)
+            {
+                tiles = GetComponentsInChildren<Tile>().ToList();
+            }
+
+            foreach(Tile tile in tiles)
+            {
+                if (Application.isEditor)
+                    DestroyImmediate(tile.gameObject);
+                else
+                    Destroy(tile.gameObject);
+            }
+
+            tiles.Clear();
+        }
+
         private Tile CreateTile(int x, int z)
         {
             var tileScale = settings.tilePrefab.transform.localScale;
@@ -62,19 +82,6 @@ namespace NavySpade.Map
             newTile.gameObject.name += $": [{x};{z}]";
 
             return newTile;
-        }
-
-        private void Clear()
-        {
-            for (var i = 0; i < Root.childCount; i++)
-            {
-                if (Application.isPlaying)
-                    Destroy(Root.GetChild(i).gameObject);
-                else
-                    DestroyImmediate(Root.GetChild(i).gameObject);
-            }
-
-            tiles.Clear();
         }
 
         private bool IsValid()

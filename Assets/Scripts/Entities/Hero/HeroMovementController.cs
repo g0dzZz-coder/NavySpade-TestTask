@@ -6,7 +6,7 @@ namespace NavySpade.Entities
     [RequireComponent(typeof(HeroInputReceiver))]
     public class HeroMovementController : MonoBehaviour
     {
-        [SerializeField] private NavMeshAgent navAgent = null;
+        [SerializeField] private NavMeshAgent agent = null;
         [SerializeField] private HeroAnimationController animator = null;
         [SerializeField] private float stoppingDistance = 0.25f;
 
@@ -29,14 +29,14 @@ namespace NavySpade.Entities
             inputReceiver = GetComponent<HeroInputReceiver>();
             inputReceiver.TargetSelected += MoveTo;
 
-            navAgent.speed = Source.data.Speed;
-            navAgent.stoppingDistance = stoppingDistance;
+            agent.speed = Source.data.speed;
+            agent.stoppingDistance = stoppingDistance;
         }
 
         private void MoveTo(Vector3 target)
         {
             destination = new Vector3(target.x, 0f, target.z);
-            navAgent.SetDestination(destination);
+            agent.SetDestination(destination);
 
             animator.OnStartRun();
         }

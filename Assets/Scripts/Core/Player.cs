@@ -22,5 +22,10 @@ namespace NavySpade.Core
             Score = 0;
             ScoreUpdated?.Invoke(Score);
         }
+
+        public static int GetBestScore()
+        {
+            return SaveSystem.GetBestScore();
+        }
     }
 }

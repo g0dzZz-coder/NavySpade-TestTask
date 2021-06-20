@@ -8,7 +8,7 @@ namespace NavySpade.UI
 
     public class HeroUI : UIElement
     {
-        [SerializeField] private HeroData hero = null;
+        [SerializeField] private Hero hero = null;
         [SerializeField] private TMP_Text healthText = null;
 
         private void Start()

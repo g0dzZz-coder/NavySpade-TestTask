@@ -12,7 +12,7 @@ namespace NavySpade.Map
 
         private void Start()
         {
-            OnMapUpdated(generator.GetTiles(), spawnableEntity.startAmount);
+            OnMapUpdated(generator.GetFreeTiles(), spawnableEntity.startAmount);
 
             generator.MapUpdated += spawnZones => OnMapUpdated(spawnZones, spawnableEntity.startAmount);
         }
@@ -22,7 +22,7 @@ namespace NavySpade.Map
             StopAllCoroutines();
         }
 
-        protected override void Spawn(SpawnZone parent)
+        protected override void Spawn(Tile parent)
         {
             base.Spawn(parent);
 
@@ -31,20 +31,22 @@ namespace NavySpade.Map
 
         private IEnumerator PeriodicSpawn()
         {
-            while (SpawnedObjects.Count < spawnableEntity.startAmount)
+            var freeTiles = generator.GetFreeTiles();
+
+            if (freeTiles.Count > 0)
             {
-                var delay = spawnableEntity.GetSpawnDelay();
+                while (SpawnedObjects.Count < spawnableEntity.startAmount)
+                {
+                    var delay = spawnableEntity.GetSpawnDelay();
+                    var freePlace = freeTiles.Random();
 
-                var freePlace = generator.GetTiles().Random();
-                if (freePlace == null || freePlace.IsPlaceTaken)
-                    continue;
+                    yield return new WaitForSeconds(delay);
 
-                yield return new WaitForSeconds(delay);
+                    Spawn(freePlace);
+                }
 
-                Spawn(freePlace);
+                spawnCoroutine = null;
             }
-
-            spawnCoroutine = null;
         }
 
         private void OnCrystalDestroyed(EntityBase<CrystalData> crystal)

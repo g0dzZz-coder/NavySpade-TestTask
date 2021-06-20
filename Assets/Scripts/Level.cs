@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace NavySpade
 {
@@ -7,8 +8,16 @@ namespace NavySpade
 
     public class Level : MonoBehaviour
     {
-        [SerializeField] private Hero hero = null;
-        //[SerializeField] private 
+        public static event Action Restarted;
 
+        public static void Restart()
+        {
+
+        }
+
+        public static void EndGame()
+        {
+            
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace NavySpade.Core
             PlayerPrefs.Save();
         }
 
-        private static int GetBestScore()
+        public static int GetBestScore()
         {
             LastBestScore = PlayerPrefs.GetInt("BestScore", 0);
             return LastBestScore;

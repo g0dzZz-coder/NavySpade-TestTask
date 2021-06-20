@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 383884861792213948, guid: d987ce0155ff8f341981ed9a13e35978, type: 3}
   icon: {fileID: 0}
   startAmount: 30
+  spawnDelay: {x: 0, y: 0}

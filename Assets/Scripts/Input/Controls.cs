@@ -33,6 +33,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""6f6c9485-b5bc-4658-a0dd-3468cb7f6d5d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -79,6 +87,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""PointerPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3cb0b885-1bed-4869-b9ea-7977c684ff00"",
+                    ""path"": ""*/{Back}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mobile"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -97,6 +116,11 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""devicePath"": ""<Mouse>"",
                     ""isOptional"": true,
                     ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
                 }
             ]
         }
@@ -106,6 +130,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Hero = asset.FindActionMap("Hero", throwIfNotFound: true);
         m_Hero_Click = m_Hero.FindAction("Click", throwIfNotFound: true);
         m_Hero_PointerPosition = m_Hero.FindAction("PointerPosition", throwIfNotFound: true);
+        m_Hero_Back = m_Hero.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -157,12 +182,14 @@ public class @Controls : IInputActionCollection, IDisposable
     private IHeroActions m_HeroActionsCallbackInterface;
     private readonly InputAction m_Hero_Click;
     private readonly InputAction m_Hero_PointerPosition;
+    private readonly InputAction m_Hero_Back;
     public struct HeroActions
     {
         private @Controls m_Wrapper;
         public HeroActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Click => m_Wrapper.m_Hero_Click;
         public InputAction @PointerPosition => m_Wrapper.m_Hero_PointerPosition;
+        public InputAction @Back => m_Wrapper.m_Hero_Back;
         public InputActionMap Get() { return m_Wrapper.m_Hero; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -178,6 +205,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @PointerPosition.started -= m_Wrapper.m_HeroActionsCallbackInterface.OnPointerPosition;
                 @PointerPosition.performed -= m_Wrapper.m_HeroActionsCallbackInterface.OnPointerPosition;
                 @PointerPosition.canceled -= m_Wrapper.m_HeroActionsCallbackInterface.OnPointerPosition;
+                @Back.started -= m_Wrapper.m_HeroActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_HeroActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_HeroActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_HeroActionsCallbackInterface = instance;
             if (instance != null)
@@ -188,6 +218,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @PointerPosition.started += instance.OnPointerPosition;
                 @PointerPosition.performed += instance.OnPointerPosition;
                 @PointerPosition.canceled += instance.OnPointerPosition;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
             }
         }
     }
@@ -205,5 +238,6 @@ public class @Controls : IInputActionCollection, IDisposable
     {
         void OnClick(InputAction.CallbackContext context);
         void OnPointerPosition(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }

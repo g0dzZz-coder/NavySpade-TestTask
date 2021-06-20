@@ -15,15 +15,18 @@ namespace NavySpade.Map
 
         private IEnumerator PeriodicSpawn()
         {
-            while (SpawnedObjects.Count < spawnableEntity.startAmount)
+            var freeTiles = generator.GetFreeTiles();
+
+            if (freeTiles.Count > 0)
             {
-                var freePlace = generator.GetTiles().Random();
-                if (freePlace == null || freePlace.IsPlaceTaken)
-                    continue;
+                while (SpawnedObjects.Count < spawnableEntity.startAmount)
+                {
+                    var freePlace = freeTiles.Random();
 
-                yield return new WaitForSeconds(spawnableEntity.GetSpawnDelay());
+                    yield return new WaitForSeconds(spawnableEntity.GetSpawnDelay());
 
-                Spawn(freePlace);
+                    Spawn(freePlace);
+                }
             }
         }
     }
