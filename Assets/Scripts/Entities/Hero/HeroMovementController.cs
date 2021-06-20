@@ -1,49 +1,78 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace NavySpade.Entities
 {
+    using Map;
+
     [RequireComponent(typeof(HeroInputReceiver))]
     public class HeroMovementController : MonoBehaviour
     {
         [SerializeField] private NavMeshAgent agent = null;
-        [SerializeField] private HeroAnimationController animator = null;
         [SerializeField] private float stoppingDistance = 0.25f;
+        [SerializeField] private Tile startPoint = null;
 
         public Hero Source { get; private set; }
 
+        public event Action MoveStarted;
+        public event Action MoveEnded;
+
+        private bool isMoving;
         private Vector3 destination;
-        private HeroInputReceiver inputReceiver = null;
+        private HeroInputReceiver inputReceiver;
 
         private void Update()
         {
+            if (isMoving == false)
+                return;
+
             var distance = Vector3.Distance(destination, transform.position);
             if (distance < stoppingDistance)
-                StopRun();
+                StopMove();
         }
 
         public void Init(Hero source)
         {
             Source = source;
 
-            inputReceiver = GetComponent<HeroInputReceiver>();
-            inputReceiver.TargetSelected += MoveTo;
+            ResetPosition();
 
             agent.speed = Source.data.speed;
             agent.stoppingDistance = stoppingDistance;
+
+            inputReceiver = GetComponent<HeroInputReceiver>();
+            inputReceiver.TargetSelected += MoveTo;
         }
 
         private void MoveTo(Vector3 target)
         {
-            destination = new Vector3(target.x, 0f, target.z);
-            agent.SetDestination(destination);
+            var newDestination = new Vector3(target.x, 0f, target.z);
+            if (agent.SetDestination(newDestination))
+            {
+                destination = newDestination;
+                isMoving = true;
 
-            animator.OnStartRun();
+                MoveStarted?.Invoke();
+            }
         }
 
-        private void StopRun()
+        private void StopMove()
         {
-            animator.OnStopRun();
+            isMoving = false;
+            MoveEnded?.Invoke();
+        }
+
+        private void ResetPosition()
+        {
+            if (startPoint == null)
+                return;
+
+            StopMove();
+
+            var position = new Vector3(startPoint.transform.position.x, 0f, startPoint.transform.position.z);
+            transform.position = position;
+            agent.SetDestination(position);
         }
     }
 }

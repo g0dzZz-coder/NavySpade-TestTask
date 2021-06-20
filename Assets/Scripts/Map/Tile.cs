@@ -10,7 +10,7 @@ namespace NavySpade.Map
 
         private Transform child = null;
 
-        private void Start()
+        private void Awake()
         {
             if (transform.childCount > 0)
                 child = GetComponentInChildren<Transform>();

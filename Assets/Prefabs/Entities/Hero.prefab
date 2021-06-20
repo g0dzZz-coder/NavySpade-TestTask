@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8375978311448007451}
   - component: {fileID: 6828103506408306365}
+  - component: {fileID: 7018926803208734387}
   - component: {fileID: 3896302904850394124}
   - component: {fileID: 1633132316495121048}
   - component: {fileID: 3097106427449106680}
   - component: {fileID: 8375978311448007445}
+  - component: {fileID: 8828785731076960757}
   - component: {fileID: 166993767777426241}
   - component: {fileID: 2970682926479816800}
-  - component: {fileID: 8828785731076960757}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -53,8 +54,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 6bdc2d22d43fa1d4a939f54ae8e67175, type: 2}
+  healthController: {fileID: 7018926803208734387}
   movementController: {fileID: 3896302904850394124}
-  startPosition: {fileID: 0}
+--- !u!114 &7018926803208734387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375978311448007446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c99c0e6e59d320458a813bb21c28ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3896302904850394124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,8 +81,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 8828785731076960757}
-  animator: {fileID: 3097106427449106680}
   stoppingDistance: 0.25
+  startPoint: {fileID: 0}
 --- !u!114 &1633132316495121048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0861df82bf1056b4fa3024b0e08a8ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementController: {fileID: 3896302904850394124}
   animator: {fileID: 8375978311448007445}
 --- !u!95 &8375978311448007445
 Animator:
@@ -115,6 +129,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &8828785731076960757
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375978311448007446}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.25
+  m_Speed: 3.5
+  m_Acceleration: 10
+  avoidancePriority: 50
+  m_AngularSpeed: 220
+  m_StoppingDistance: 0.1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!136 &166993767777426241
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -145,28 +181,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!195 &8828785731076960757
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8375978311448007446}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.25
-  m_Speed: 3.5
-  m_Acceleration: 10
-  avoidancePriority: 50
-  m_AngularSpeed: 220
-  m_StoppingDistance: 0.1
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1001 &4831691249456054515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,7 +192,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hero
       value: 
-      objectReference: {fileID: 6828103506408306365}
+      objectReference: {fileID: 7018926803208734387}
     - target: {fileID: 9154713304817380593, guid: 287dff579fe77c14eac88566c6fdb398,
         type: 3}
       propertyPath: m_RootOrder

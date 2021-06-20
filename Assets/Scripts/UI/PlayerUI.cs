@@ -1,10 +1,9 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace NavySpade.UI
 {
-    using Core;
+    using Player;
 
     public class PlayerUI : UIElement
     {
@@ -12,30 +11,16 @@ namespace NavySpade.UI
 
         private void Start()
         {
-            Show();
-        }
-
-        private void OnEnable()
-        {
             UpdateScore(Player.Score);
 
+            Level.Instance.Restarted += Show;
+            Level.Instance.GameEnded += Hide;
             Player.ScoreUpdated += UpdateScore;
-        }
-
-        private void OnDisable()
-        {
-            Player.ScoreUpdated -= UpdateScore;
         }
 
         private void UpdateScore(int score)
         {
             scoreText.text = score.ToString();
-        }
-
-        private void OnValidate()
-        {
-            if (scoreText == null)
-                throw new NullReferenceException();
         }
     }
 }

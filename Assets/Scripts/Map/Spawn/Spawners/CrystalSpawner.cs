@@ -10,11 +10,10 @@ namespace NavySpade.Map
     {
         private Coroutine spawnCoroutine;
 
-        private void Start()
+        private void Awake()
         {
-            OnMapUpdated(generator.GetFreeTiles(), spawnableEntity.startAmount);
-
-            generator.MapUpdated += spawnZones => OnMapUpdated(spawnZones, spawnableEntity.startAmount);
+            Level.Instance.Restarted += () => OnMapUpdated(generator.GetFreeTiles(), spawnableEntity.startAmount);
+            Level.Instance.GameEnded += StopAllCoroutines;
         }
 
         private void OnDisable()
@@ -22,11 +21,13 @@ namespace NavySpade.Map
             StopAllCoroutines();
         }
 
-        protected override void Spawn(Tile parent)
+        protected override Crystal Spawn(Tile parent)
         {
-            base.Spawn(parent);
+            var crystal = base.Spawn(parent);
+            parent.SetChild(crystal.transform);
+            crystal.Destroyed += OnCrystalDestroyed;
 
-            SpawnedObjects[SpawnedObjects.Count - 1].Destroyed += OnCrystalDestroyed;
+            return crystal;
         }
 
         private IEnumerator PeriodicSpawn()

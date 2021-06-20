@@ -9,7 +9,7 @@ namespace NavySpade.Entities
 
         private float timer = 0f;
 
-        private void Start()
+        private void Awake()
         {
             agent.speed = data.speed;
         }
@@ -22,9 +22,28 @@ namespace NavySpade.Entities
                 return;
 
             var target = GetRandomNavmeshLocation(data.wanderRadius, -1);
-            Debug.Log(target);
             agent.SetDestination(target);
             timer = 0;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out HeroHealthController hero))
+                OnContactWithHero(hero);
+            else if (other.TryGetComponent(out Crystal crystal))
+                OnContactWithCrystal(crystal);
+        }
+
+        private void OnContactWithHero(HeroHealthController hero)
+        {
+            hero.TakeDamage(data.damage);
+            Destroy();
+        }
+
+        private void OnContactWithCrystal(Crystal crystal)
+        {
+            crystal.Destroy();
+            Destroy();
         }
 
         private Vector3 GetRandomNavmeshLocation(float radius, LayerMask layerMask)

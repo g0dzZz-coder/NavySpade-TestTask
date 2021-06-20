@@ -21,19 +21,19 @@ namespace NavySpade
         public K Data => spawnableEntity;
         public ObservableCollection<T> SpawnedObjects { get; private set; } = new ObservableCollection<T>();
 
-        protected virtual void Spawn(Tile parent)
+        protected virtual T Spawn(Tile parent)
         {
             var entity = Instantiate(spawnableEntity.prefab, parent.transform).GetComponent<T>();
             entity.transform.SetParent(root);
 
             entity.Destroyed += OnEntityDestroyed;
-
-            parent.SetChild(entity.transform);
             entity.Destroyed += x => parent.UnsetChild();
 
             SpawnedObjects.Add(entity);
 
             EntitySpawned?.Invoke(entity);
+
+            return entity;
         }
 
         private void OnEntityDestroyed(EntityBase<K> entity)
@@ -49,18 +49,18 @@ namespace NavySpade
 
         public void RemoveAllObjects()
         {
-            if (Application.isEditor)
-            {
-                foreach (var child in transform.parent.GetComponentsInChildren<T>())
-                    DestroyImmediate(child.gameObject);
-            }
-            else
+            if (Application.isPlaying)
             {
                 foreach (var obj in SpawnedObjects)
                 {
                     try { Destroy(obj.gameObject); }
                     catch { }
                 }
+            }
+            else
+            {
+                foreach (var child in transform.parent.GetComponentsInChildren<T>())
+                    DestroyImmediate(child.gameObject);
             }
 
             SpawnedObjects.Clear();

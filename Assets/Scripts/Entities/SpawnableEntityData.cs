@@ -2,7 +2,7 @@
 
 namespace NavySpade.Entities
 {
-    [CreateAssetMenu(fileName = "Obstacle", menuName = "Settings/Entity", order = 51)]
+    [CreateAssetMenu(fileName = "SpawnableEntity", menuName = "Settings/SpawnableEntity", order = 51)]
     public class SpawnableEntityData : EntityData
     {
         [Header("Spawn")]

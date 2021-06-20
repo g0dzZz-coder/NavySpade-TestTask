@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace NavySpade.UI
@@ -8,35 +7,21 @@ namespace NavySpade.UI
 
     public class HeroUI : UIElement
     {
-        [SerializeField] private Hero hero = null;
+        [SerializeField] private HeroHealthController hero = null;
         [SerializeField] private TMP_Text healthText = null;
 
         private void Start()
         {
-            Show();
-        }
-
-        private void OnEnable()
-        {
             UpdateLives(hero.Health);
 
+            Level.Instance.Restarted += Show;
+            Level.Instance.GameEnded += Hide;
             hero.HealthUpdated += UpdateLives;
-        }
-
-        private void OnDisable()
-        {
-            hero.HealthUpdated -= UpdateLives;
         }
 
         private void UpdateLives(int livesCount)
         {
             healthText.text = livesCount.ToString();
-        }
-
-        private void OnValidate()
-        {
-            if (healthText == null)
-                throw new NullReferenceException();
         }
     }
 }

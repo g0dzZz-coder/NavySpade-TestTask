@@ -17,5 +17,4 @@ MonoBehaviour:
   startHealth: 3
   maxHealth: 3
   speed: 3
-  isInvulnerable: 1
   durationOfInvulnerability: 3

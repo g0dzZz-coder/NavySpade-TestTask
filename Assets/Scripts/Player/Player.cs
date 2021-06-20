@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NavySpade.Core
+namespace NavySpade.Player
 {
     public static class Player
     {

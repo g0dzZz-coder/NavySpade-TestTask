@@ -3,39 +3,22 @@ using UnityEngine;
 
 namespace NavySpade.Entities
 {
+    using Input;
+
     public class HeroInputReceiver : MonoBehaviour
     {
         [SerializeField] private Camera _camera = null;
 
-        public Controls Controls
-        {
-            get
-            {
-                if (controls == null)
-                    controls = new Controls();
-
-                return controls;
-            }
-        }
-        private Controls controls;
-
         public event Action<Vector3> TargetSelected;
 
-        private void OnEnable()
+        private void Start()
         {
-            Controls.Hero.Click.performed += context => OnClick();
-            Controls.Hero.Enable();
-        }
-
-        private void OnDisable()
-        {
-            Controls.Hero.Click.performed -= context => OnClick();
-            Controls.Hero.Disable();
+            InputManager.Instance.Controls.Hero.Click.performed += context => OnClick();
         }
 
         private void OnClick()
         {
-            var screenPosition = Controls.Hero.PointerPosition.ReadValue<Vector2>();
+            var screenPosition = InputManager.Instance.Controls.Hero.PointerPosition.ReadValue<Vector2>();
             var ray = _camera.ScreenPointToRay(screenPosition);
             Check(ray);
         }

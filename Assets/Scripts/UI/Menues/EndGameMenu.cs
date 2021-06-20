@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 namespace NavySpade.UI
 {
-    using Core;
+    using Player;
 
     public class EndGameMenu : MenuBase
     {
         [SerializeField] private Button restartButton = null;
-        [SerializeField] private TMP_Text scoreText = null;
+        [SerializeField] private TMP_Text lastScoreText = null;
+        [SerializeField] private TMP_Text bestScoreText = null;
 
         private void Awake()
         {
@@ -18,19 +19,11 @@ namespace NavySpade.UI
             if (restartButton)
                 restartButton.onClick.AddListener(OnRestartButtonClicked);
 
+            Level.Instance.GameEnded += Enable;
+
             var controls = new Controls();
             controls.Hero.Back.Enable();
             controls.Hero.Back.performed += context => Toggle();
-        }
-
-        private void OnEnable()
-        {
-            Game.Ended += Enable;
-        }
-
-        private void OnDisable()
-        {
-            Game.Ended -= Enable;
         }
 
         private void Toggle()
@@ -41,17 +34,22 @@ namespace NavySpade.UI
                 Enable();
         }
 
-        private void Enable(bool win)
+        public override void Enable()
         {
             base.Enable();
 
-            if (scoreText)
-                scoreText.text = "0";
+            var lastScore = Player.Score;
+            var bestScore = SaveSystem.GetBestScore();
+
+            lastScoreText.text = lastScore.ToString();
+            bestScoreText.text = bestScore.ToString();
         }
 
         private void OnRestartButtonClicked()
         {
             Disable();
+
+            Level.Instance.Restart();
         }
     }
 }

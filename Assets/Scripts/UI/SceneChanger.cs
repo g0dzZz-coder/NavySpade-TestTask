@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace NavySpade.UI
 {
-    using Core;
+    using Utils;
 
     public class SceneChanger : MonoSingleton<SceneChanger>
     {

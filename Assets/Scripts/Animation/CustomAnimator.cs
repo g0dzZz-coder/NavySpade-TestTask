@@ -8,9 +8,19 @@ namespace NavySpade.Animation
 
         public AnimationSettings Settings => settings;
 
-        private void Start()
+        private void OnEnable()
+        {
+            Show();
+        }
+
+        public void Show()
         {
             AnimationExtensions.Show(transform);
+        }
+
+        public void Hide()
+        {
+            AnimationExtensions.Hide(transform);
         }
     }
 }

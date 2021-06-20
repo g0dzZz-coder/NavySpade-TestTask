@@ -15,10 +15,8 @@ namespace NavySpade.UI
         public TMP_Text distanceText = null;
     }
 
-    public class LevelUI : MonoBehaviour
+    public class LevelUI : UIElement
     {
-        [SerializeField] private Transform hero = null;
-
         [SerializeField] private CrystalSpawner crystalContainer = null;
         [SerializeField] private LevelInfoUI crystalInfo = null;
 
@@ -27,22 +25,20 @@ namespace NavySpade.UI
 
         private void LateUpdate()
         {
-            OnCrystalDistanceChanged(crystalContainer.SpawnedObjects.GetClosestDistance(hero.position));
-            OnEnemyDistanceChanged(enemyContainer.SpawnedObjects.GetClosestDistance(hero.position));
+            var heroPosition = Level.Instance.Hero.transform.position;
+            OnCrystalDistanceChanged(crystalContainer.SpawnedObjects.GetClosestDistance(heroPosition));
+            OnEnemyDistanceChanged(enemyContainer.SpawnedObjects.GetClosestDistance(heroPosition));
         }
 
-        private void OnEnable()
+        private void Start()
         {
             OnCrystalCountChanged(null, null);
             OnEnemyCountChanged(null, null);
+
             crystalContainer.SpawnedObjects.CollectionChanged += OnCrystalCountChanged;
             enemyContainer.SpawnedObjects.CollectionChanged += OnEnemyCountChanged;
-        }
-
-        private void OnDisable()
-        {
-            crystalContainer.SpawnedObjects.CollectionChanged -= OnCrystalCountChanged;
-            enemyContainer.SpawnedObjects.CollectionChanged -= OnEnemyCountChanged;
+            Level.Instance.Restarted += Show;
+            Level.Instance.GameEnded += Hide;
         }
 
         private void OnCrystalCountChanged(object sender, NotifyCollectionChangedEventArgs e)

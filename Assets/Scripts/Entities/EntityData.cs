@@ -2,7 +2,8 @@
 
 namespace NavySpade.Entities
 {
-    public abstract class EntityData : ScriptableObject
+    [CreateAssetMenu(fileName = "Entity", menuName = "Settings/Entity", order = 51)]
+    public class EntityData : ScriptableObject
     {
         [Header("General")]
         public GameObject prefab = null;

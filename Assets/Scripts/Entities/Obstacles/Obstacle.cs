@@ -4,13 +4,8 @@ namespace NavySpade.Entities
 {
     public class Obstacle : EntityBase<SpawnableEntityData>
     {
-        [MinMaxSlider(0f, 1f)]
-        [SerializeField] private Vector2 minMaxScales = new Vector2(0.1f, 0.5f);
-
-        //private void Awake()
-        //{
-        //    SetRandomHeight();
-        //}
+        [MinMaxSlider(0f, 3f)]
+        [SerializeField] private Vector2 minMaxScales = new Vector2(0.1f, 2f);
 
         public void SetRandomHeight()
         {

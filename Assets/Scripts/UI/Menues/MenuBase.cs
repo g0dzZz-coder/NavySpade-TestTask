@@ -14,7 +14,7 @@ namespace NavySpade.UI
 
         public virtual void Enable()
         {
-            if (menuRoot.enabled)
+            if (menuRoot.gameObject.activeSelf)
                 return;
 
             AnimationExtensions.Show(menuRoot.transform, () => onEnabled.Invoke());
@@ -22,7 +22,7 @@ namespace NavySpade.UI
 
         public virtual void Disable()
         {
-            if (menuRoot.enabled == false)
+            if (menuRoot.gameObject.activeSelf == false)
                 return;
 
             AnimationExtensions.Hide(menuRoot.transform, OnDisabled);

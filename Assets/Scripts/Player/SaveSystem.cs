@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NavySpade.Core
+namespace NavySpade.Player
 {
     public static class SaveSystem
     {

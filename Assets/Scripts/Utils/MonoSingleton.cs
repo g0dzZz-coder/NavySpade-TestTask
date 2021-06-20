@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace NavySpade.Core
+namespace NavySpade.Utils
 {
     public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
     {
-        public bool keepAlive = true;
-
         protected static T instance;
         protected int instancesInScene;
 
@@ -53,25 +51,22 @@ namespace NavySpade.Core
         {
             if (instancesInScene < 2)
             {
-                if (!keepAlive)
-                    DisposeInternal();
+                DisposeInternal();
             }
             else
             {
-                if (!keepAlive && Instance != this)
+                if (Instance != this)
                     DisposeInternal();
             }
         }
 
         protected virtual bool Init(T instance)
         {
-            if (instance != null && instance != this && instance.keepAlive)
+            if (instance != null && instance != this)
             {
                 DisposeInternal();
                 return false;
             }
-
-            DontDestroyOnLoad(transform.parent != null ? transform.root.gameObject : gameObject);
 
             return true;
         }

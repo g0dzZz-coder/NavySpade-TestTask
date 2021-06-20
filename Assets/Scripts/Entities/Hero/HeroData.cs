@@ -10,7 +10,9 @@ namespace NavySpade.Entities
         public int startHealth = 3;
         [Range(3, 10)]
         public int maxHealth = 3;
-        public int speed = 3;
+        [Range(0f, 5f)]
+        public float speed = 3f;
+        [Range(0.1f, 10f)]
         public float durationOfInvulnerability = 3f;
     }
 }

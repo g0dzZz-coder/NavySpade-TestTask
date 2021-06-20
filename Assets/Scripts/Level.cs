@@ -1,23 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using System;
 
 namespace NavySpade
 {
+    using Cameras;
     using Entities;
+    using Map;
+    using Utils;
 
-    public class Level : MonoBehaviour
+    public class Level : MonoSingleton<Level>
     {
-        public static event Action Restarted;
+        [SerializeField] private Hero hero = null;
+        [SerializeField] private MapGenerator map = null;
+        [SerializeField] private CameraController _camera = null;
 
-        public static void Restart()
+        public Hero Hero => hero;
+
+        public event Action Restarted;
+        public event Action GameEnded;
+
+        protected override void Start()
         {
+            base.Start();
 
+            _camera.SetTarget(hero.transform);
+            Restart();
+
+            hero.HealthController.Died += EndGame;
         }
 
-        public static void EndGame()
+        public void Restart()
         {
-            
+            Player.Player.ResetScore();
+            map.OnRestarted();
+
+            Restarted?.Invoke();
+        }
+
+        public void EndGame()
+        {
+            GameEnded?.Invoke();
         }
     }
 }

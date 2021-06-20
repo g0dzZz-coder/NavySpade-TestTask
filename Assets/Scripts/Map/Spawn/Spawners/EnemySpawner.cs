@@ -8,9 +8,30 @@ namespace NavySpade.Map
 
     public class EnemySpawner : Spawner<Enemy, EnemyData>
     {
-        private void Start()
+        private void Awake()
         {
+            Level.Instance.Restarted += StartSpawn;
+            Level.Instance.GameEnded += StopSpawn;
+        }
+
+        protected override Enemy Spawn(Tile parent)
+        {
+            var enemy = base.Spawn(parent);
+            enemy.transform.SetParent(root ? root : transform);
+
+            return enemy;
+        }
+
+        private void StartSpawn()
+        {
+            StopSpawn();
             StartCoroutine(PeriodicSpawn());
+        }
+
+        private void StopSpawn()
+        {
+            RemoveAllObjects();
+            StopAllCoroutines();
         }
 
         private IEnumerator PeriodicSpawn()

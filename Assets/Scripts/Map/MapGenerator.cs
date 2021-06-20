@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.AI;
 using UnityEngine;
 
 namespace NavySpade.Map
@@ -16,6 +15,12 @@ namespace NavySpade.Map
         private Transform Root => root ? root : transform;
 
         private List<Tile> tiles = new List<Tile>();
+
+        public void OnRestarted()
+        {
+            tiles = GetComponentsInChildren<Tile>().ToList();
+            MapUpdated?.Invoke(tiles);
+        }
 
         public List<Tile> GetFreeTiles()
         {
@@ -51,8 +56,8 @@ namespace NavySpade.Map
 
             Debug.Log($"Map Generated. Number of tiles = {i}");
 
-            if (Application.isPlaying)
-                NavMeshBuilder.BuildNavMesh();
+            //if (Application.isPlaying)
+            //    NavMeshBuilder.BuildNavMesh();
         }
 
         public void Clear()
@@ -62,7 +67,7 @@ namespace NavySpade.Map
                 tiles = GetComponentsInChildren<Tile>().ToList();
             }
 
-            foreach(Tile tile in tiles)
+            foreach (Tile tile in tiles)
             {
                 if (Application.isEditor)
                     DestroyImmediate(tile.gameObject);

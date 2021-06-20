@@ -5,14 +5,27 @@ namespace NavySpade.Entities
     [RequireComponent(typeof(Animator))]
     public class HeroAnimationController : MonoBehaviour
     {
+        [SerializeField] private HeroMovementController movementController = null;
         [SerializeField] private Animator animator = null;
 
-        public void OnStartRun()
+        private void OnEnable()
+        {
+            movementController.MoveStarted += OnMoveStarted;
+            movementController.MoveEnded += OnMoveEnded;
+        }
+
+        private void OnDisable()
+        {
+            movementController.MoveStarted -= OnMoveStarted;
+            movementController.MoveEnded -= OnMoveEnded;
+        }
+
+        public void OnMoveStarted()
         {
             animator.SetBool("IsRun", true);
         }
 
-        public void OnStopRun()
+        public void OnMoveEnded()
         {
             animator.SetBool("IsRun", false);
         }

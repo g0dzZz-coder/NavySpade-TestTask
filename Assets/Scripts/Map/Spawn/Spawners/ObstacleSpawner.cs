@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NavySpade
 {
@@ -8,25 +7,15 @@ namespace NavySpade
 
     public class ObstacleSpawner : Spawner<Obstacle, SpawnableEntityData>
     {
-        private void Awake()
+        protected override Obstacle Spawn(Tile parent)
         {
-            generator.MapUpdated += spawnZones => OnMapUpdated(spawnZones, spawnableEntity.startAmount);
-        }
+            var obstacle = base.Spawn(parent);
+            parent.SetChild(obstacle.transform);
 
-        protected override void Spawn(Tile parent)
-        {
-            base.Spawn(parent);
+            if (Application.isEditor)
+                obstacle.SetRandomHeight();
 
-            if (Application.isEditor == false)
-                return;
-
-            var last = SpawnedObjects.Last();
-            if (last == null)
-                return;
-
-            last.SetRandomHeight();
-
-            Debug.Log(1);
+            return obstacle;
         }
     }
 }
