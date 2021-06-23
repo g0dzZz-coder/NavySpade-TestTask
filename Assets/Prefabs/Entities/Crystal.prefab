@@ -49,7 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9541af2876a2d5f4db8be0a0c3643070, type: 2}
-  initialHeight: 0.5
+  _initialHeight: 0.5
+  _ignoreRaycasts: 1
 --- !u!114 &656341578764146105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,12 +63,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef91634423988b4e863cd520cde42ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings:
+  _settings:
     duration: 0.5
     loopType: 2
     ease: 32
-  direction: {x: 0, y: 1, z: 0}
-  angle: 90
+  _direction: {x: 0, y: 1, z: 0}
+  _angle: 90
 --- !u!114 &2578938767299602164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d624b008d2b8b4142920ff1939bf22cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings:
+  _settings:
     duration: 0.5
 --- !u!33 &656341578764146084
 MeshFilter:

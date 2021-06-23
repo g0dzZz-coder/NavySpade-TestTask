@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2853607673026667561}
   - component: {fileID: 2853607673026667562}
   - component: {fileID: 2853607673026667563}
+  - component: {fileID: 2661769623328592177}
   m_Layer: 0
   m_Name: Border
   m_TagString: Untagged
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: ab3bae77584f9cf43a11bb1f877ed7e2, type: 2}
-  minMaxScales: {x: 1.48, y: 3}
+  _minMaxScales: {x: 0.1, y: 2}
 --- !u!33 &2853607673026667561
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -108,3 +109,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &2661769623328592177
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2853607673026667572}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

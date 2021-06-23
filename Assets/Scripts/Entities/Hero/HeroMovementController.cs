@@ -71,7 +71,7 @@ namespace NavySpade.Entities.Hero
             StopMove();
 
             var position = new Vector3(startPoint.transform.position.x, 0f, startPoint.transform.position.z);
-            _handler.SetPosition(position);
+            transform.position = position;
         }
     }
 }

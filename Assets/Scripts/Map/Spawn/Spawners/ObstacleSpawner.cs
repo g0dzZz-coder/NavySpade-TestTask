@@ -20,8 +20,7 @@ namespace NavySpade
             var obstacle = base.Spawn(parent);
             parent.SetChild(obstacle.transform);
 
-            if (Application.isEditor)
-                obstacle.SetRandomHeight();
+            obstacle.SetRandomHeight();
 
             return obstacle;
         }

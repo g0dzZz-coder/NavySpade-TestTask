@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 6bdc2d22d43fa1d4a939f54ae8e67175, type: 2}
+  _ignoreRaycasts: 1
   _healthController: {fileID: 7018926803208734387}
   _movementController: {fileID: 3896302904850394124}
 --- !u!114 &7018926803208734387

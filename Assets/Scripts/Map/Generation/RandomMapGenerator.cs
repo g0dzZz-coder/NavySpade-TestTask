@@ -1,5 +1,6 @@
-﻿using UnityEditor.AI;
+﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace NavySpade.Map.Generation
 {
@@ -12,8 +13,7 @@ namespace NavySpade.Map.Generation
 
             base.GenerateMap();
 
-            if (Application.isPlaying)
-                NavMeshBuilder.BuildNavMesh();
+            Tiles.LastOrDefault().GetComponent<NavMeshSurface>().BuildNavMesh();
         }
 
         protected override Tile GetPrefab(int x, int z)

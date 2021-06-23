@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7189916578495276172}
   - component: {fileID: 4574003270058316853}
   - component: {fileID: 6474746575197635620}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 4253499726850108207}
   - component: {fileID: 6477235509232919194}
   - component: {fileID: 3406924386454215253}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 690c6f395abe4b9409b7686dd6b2a797, type: 2}
+  _ignoreRaycasts: 1
 --- !u!114 &2401071525993806748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +247,7 @@ GameObject:
   - component: {fileID: 208039556936005677}
   - component: {fileID: 6539340782681923472}
   - component: {fileID: 1897379605723114693}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +360,7 @@ GameObject:
   - component: {fileID: 513176532668601722}
   - component: {fileID: 5026835715402408255}
   - component: {fileID: 6230020811492395482}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

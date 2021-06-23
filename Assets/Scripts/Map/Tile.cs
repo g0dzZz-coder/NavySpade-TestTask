@@ -24,15 +24,15 @@ namespace NavySpade.Map
 
         public void UnsetChild()
         {
-            child = null; 
+            child = null;
         }
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = IsFree ? Color.green:  Color.red;
+            Gizmos.color = IsFree ? Color.green : Color.red;
             Gizmos.matrix = transform.localToWorldMatrix;
 
-            var center = new Vector3(0, transform.localScale.y/2f, 0f);
+            var center = new Vector3(0, transform.localScale.y / 2f, 0f);
             var size = new Vector3(transform.localScale.x, 0, transform.localScale.z);
 
             Gizmos.DrawWireCube(center, size);

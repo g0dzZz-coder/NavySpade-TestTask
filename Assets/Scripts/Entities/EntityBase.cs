@@ -10,6 +10,8 @@ namespace NavySpade.Entities
     {
         public T data;
 
+        [SerializeField] private bool _ignoreRaycasts = false;
+
         public event Action<EntityBase<T>> Destroyed;
 
         protected Collider Collider { get; private set; }
@@ -17,6 +19,9 @@ namespace NavySpade.Entities
         protected virtual void Awake()
         {
             Collider = GetComponent<Collider>();
+
+            if (_ignoreRaycasts)
+                gameObject.layer = 2;
         }
 
         private void OnEnable()

@@ -8,6 +8,7 @@ namespace NavySpade.Map.Generation
     public abstract class MapGenerator : MonoBehaviour
     {
         [SerializeField] protected MapSettings settings = null;
+        [SerializeField] private Transform _plane = null;
         [SerializeField] private Transform _root = null;
 
         public List<Tile> Tiles { get; protected set; } = new List<Tile>();
@@ -22,6 +23,8 @@ namespace NavySpade.Map.Generation
 
             if (settings == null)
                 return;
+
+            _plane.transform.localScale = new Vector3(settings.mapSize.x / 10f, 1, settings.mapSize.y / 10f);
 
             for (var x = 0; x < settings.mapSize.x; x++)
             {
@@ -71,6 +74,7 @@ namespace NavySpade.Map.Generation
             var scale = prefab.transform.localScale;
             var position = new Vector3(-settings.mapSize.x / 2f + scale.x + x, -scale.y / 2f, -settings.mapSize.y / 2f + scale.z + z);
             var tile = Instantiate(prefab, position, Quaternion.identity, Root);
+
             tile.gameObject.name += $": [{x};{z}]";
 
             Tiles.Add(tile);

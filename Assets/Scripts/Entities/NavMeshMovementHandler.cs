@@ -22,8 +22,7 @@ namespace NavySpade.Entities
 
         public void SetPosition(Vector3 position)
         {
-            transform.position = position;
-            //_agent.SetDestination(position);
+            _agent.SetDestination(position);
         }
 
         public bool TryToSetDestination(Vector3 destination)
