@@ -6,7 +6,7 @@ namespace NavySpade.Editor
     using Map;
     using Editor = UnityEditor.Editor;
 
-    [CustomEditor(typeof(MapGenerator))]
+    [CustomEditor(typeof(MapGenerator), true)]
     public class MapEditor : Editor
     {
         public override void OnInspectorGUI()

@@ -32,7 +32,7 @@ namespace NavySpade
         public void Restart()
         {
             Player.Player.ResetScore();
-            map.OnRestarted();
+            map.GenerateMap();
 
             Restarted?.Invoke();
         }

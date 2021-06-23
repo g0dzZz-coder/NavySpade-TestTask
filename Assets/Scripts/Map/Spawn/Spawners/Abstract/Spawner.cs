@@ -30,7 +30,7 @@ namespace NavySpade
             return entity;
         }
 
-        public void OnMapUpdated(List<Tile> tiles, int amount)
+        public virtual void OnMapUpdated(List<Tile> tiles, int amount)
         {
             RemoveAllObjects();
             SpawnMissing(tiles, amount);

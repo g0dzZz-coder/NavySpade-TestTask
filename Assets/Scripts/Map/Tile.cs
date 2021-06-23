@@ -6,7 +6,7 @@ namespace NavySpade.Map
 
     public class Tile : MonoBehaviour, ISelectable
     {
-        public bool IsFree => child == null;
+        public virtual bool IsFree => child == null;
 
         private Transform child = null;
 

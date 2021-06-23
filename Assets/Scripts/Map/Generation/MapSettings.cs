@@ -17,8 +17,12 @@ namespace NavySpade.Map
     {
         public Vector2 mapSize = new Vector2(20, 20);
 
+        public Texture2D mapTexture = null;
+
         [SerializeField] private Tile tilePrefab = null;
+
         [SerializeField] private EnemySpawnZone spawnZonePrefab = null;
+
         [Range(0f, 1f)]
         [SerializeField] private float spawnZoneFraquency = 0.2f;
 
