@@ -6,10 +6,10 @@ namespace NavySpade.Entities.Hero
 
     public class Hero : EntityBase<HeroData>
     {
-        [SerializeField] private HeroHealthController healthController = null;
-        [SerializeField] private HeroMovementController movementController = null;
+        [SerializeField] private HeroHealthController _healthController = null;
+        [SerializeField] private HeroMovementController _movementController = null;
 
-        public HeroHealthController HealthController => healthController;
+        public HeroHealthController HealthController => _healthController;
 
         protected override void Awake()
         {
@@ -31,25 +31,25 @@ namespace NavySpade.Entities.Hero
 
         private void OnContactWithEnemy(Enemy enemy)
         {
-            if (healthController.IsInvulnerable)
+            if (_healthController.IsInvulnerable)
                 return;
 
-            healthController.TakeDamage(enemy.data.damage);
+            _healthController.TakeDamage(enemy.data.damage);
             enemy.Destroy();
         }
 
         private void OnContactWithCrystal(Crystal crystal)
         {
             Player.IncreaseScore(crystal.data.GetReward());
-            healthController.InscreaseHealth(crystal.data.healthReward);
+            _healthController.InscreaseHealth(crystal.data.healthReward);
 
             crystal.Destroy();
         }
 
         private void ResetState()
         {
-            healthController.Init(data);
-            movementController.Init(this);
+            _healthController.Init(data);
+            _movementController.Init(this);
         }
     }
 }

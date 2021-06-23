@@ -13,11 +13,11 @@ namespace NavySpade.Entities.Hero
         public event Action Died;
         public event Action<bool> InvulnerableUpdated;
 
-        private HeroData data;
+        private HeroData _data;
 
         public void Init(HeroData data)
         {
-            this.data = data;
+            _data = data;
             Health = data.startHealth;
             HealthUpdated?.Invoke(Health);
 
@@ -47,9 +47,9 @@ namespace NavySpade.Entities.Hero
                 Health = 0;
                 Died?.Invoke();
             }
-            else if (Health > data.maxHealth)
+            else if (Health > _data.maxHealth)
             {
-                Health = data.maxHealth;
+                Health = _data.maxHealth;
             }
 
             HealthUpdated?.Invoke(Health);
@@ -60,7 +60,7 @@ namespace NavySpade.Entities.Hero
             SetInvulnerable(true);
 
             var duration = 0f;
-            while (duration < data.durationOfInvulnerability)
+            while (duration < _data.durationOfInvulnerability)
             {
                 duration += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();

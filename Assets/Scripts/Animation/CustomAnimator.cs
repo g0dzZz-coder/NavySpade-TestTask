@@ -4,9 +4,9 @@ namespace NavySpade.Animation
 {
     public class CustomAnimator : MonoBehaviour
     {
-        [SerializeField] private AnimationSettings settings = null;
+        [SerializeField] private AnimationSettings _settings = null;
 
-        public AnimationSettings Settings => settings;
+        public AnimationSettings Settings => _settings;
 
         private void OnEnable()
         {

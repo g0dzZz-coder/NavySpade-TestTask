@@ -1,7 +1,7 @@
 ﻿using UnityEditor.AI;
 using UnityEngine;
 
-namespace NavySpade.Map
+namespace NavySpade.Map.Generation
 {
     public class RandomMapGenerator : MapGenerator
     {

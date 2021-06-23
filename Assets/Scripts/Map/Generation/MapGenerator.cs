@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NavySpade.Map
+namespace NavySpade.Map.Generation
 {
     public abstract class MapGenerator : MonoBehaviour
     {
         [SerializeField] protected MapSettings settings = null;
-        [SerializeField] private Transform root = null;
+        [SerializeField] private Transform _root = null;
 
         public List<Tile> Tiles { get; protected set; } = new List<Tile>();
         public List<EnemySpawnZone> SpawnZones { get; protected set; } = new List<EnemySpawnZone>();
-        protected Transform Root => root ? root : transform;
+        protected Transform Root => _root ? _root : transform;
 
         public Action<List<Tile>> MapUpdated { get; set; }
 

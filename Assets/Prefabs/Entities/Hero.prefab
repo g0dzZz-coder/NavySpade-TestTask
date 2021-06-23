@@ -55,8 +55,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 6bdc2d22d43fa1d4a939f54ae8e67175, type: 2}
-  healthController: {fileID: 7018926803208734387}
-  movementController: {fileID: 3896302904850394124}
+  _healthController: {fileID: 7018926803208734387}
+  _movementController: {fileID: 3896302904850394124}
 --- !u!114 &7018926803208734387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,8 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3da836a83a23e9b428bed400052585fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoppingDistance: 0.25
-  startPoint: {fileID: 0}
+  _stoppingDistance: 0.25
 --- !u!114 &1633132316495121048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,8 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0861df82bf1056b4fa3024b0e08a8ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementController: {fileID: 3896302904850394124}
-  animator: {fileID: 8375978311448007445}
+  _movementController: {fileID: 3896302904850394124}
+  _animator: {fileID: 8375978311448007445}
 --- !u!114 &5719705485073352141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5498631d75a60624385332abcc3aeea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 8828785731076960757}
+  _agent: {fileID: 8828785731076960757}
 --- !u!95 &8375978311448007445
 Animator:
   serializedVersion: 3
@@ -204,6 +203,11 @@ PrefabInstance:
     - target: {fileID: 9154713304817380592, guid: 287dff579fe77c14eac88566c6fdb398,
         type: 3}
       propertyPath: hero
+      value: 
+      objectReference: {fileID: 7018926803208734387}
+    - target: {fileID: 9154713304817380592, guid: 287dff579fe77c14eac88566c6fdb398,
+        type: 3}
+      propertyPath: _hero
       value: 
       objectReference: {fileID: 7018926803208734387}
     - target: {fileID: 9154713304817380593, guid: 287dff579fe77c14eac88566c6fdb398,

@@ -2,7 +2,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace NavySpade.Map
+namespace NavySpade.Map.Generation
 {
     [Serializable]
     public struct TileType
@@ -19,19 +19,19 @@ namespace NavySpade.Map
 
         public Texture2D mapTexture = null;
 
-        [SerializeField] private Tile tilePrefab = null;
+        [SerializeField] private Tile _tilePrefab = null;
 
-        [SerializeField] private EnemySpawnZone spawnZonePrefab = null;
+        [SerializeField] private EnemySpawnZone _spawnZonePrefab = null;
 
         [Range(0f, 1f)]
-        [SerializeField] private float spawnZoneFraquency = 0.2f;
+        [SerializeField] private float _spawnZoneFraquency = 0.2f;
 
         public Tile GetRandomPrefab()
         {
-            if (Random.Range(0f, 1f) > spawnZoneFraquency)
-                return tilePrefab;
+            if (Random.Range(0f, 1f) > _spawnZoneFraquency)
+                return _tilePrefab;
 
-            return spawnZonePrefab;
+            return _spawnZonePrefab;
         }
     }
 }

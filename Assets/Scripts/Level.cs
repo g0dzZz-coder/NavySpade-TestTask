@@ -6,15 +6,17 @@ namespace NavySpade
     using Cameras;
     using Entities.Hero;
     using Map;
+    using Map.Generation;
     using Utils;
 
     public class Level : MonoSingleton<Level>
     {
-        [SerializeField] private Hero hero = null;
-        [SerializeField] private MapGenerator map = null;
+        [SerializeField] private Hero _hero = null;
+        [SerializeField] private MapGenerator _map = null;
         [SerializeField] private CameraController _camera = null;
+        [SerializeField] private Tile _heroStartPoint = null;
 
-        public Hero Hero => hero;
+        public Hero Hero => _hero;
 
         public event Action Restarted;
         public event Action GameEnded;
@@ -23,16 +25,16 @@ namespace NavySpade
         {
             base.Start();
 
-            _camera.SetTarget(hero.transform);
+            _camera.SetTarget(_hero.transform);
             Restart();
 
-            hero.HealthController.Died += EndGame;
+            _hero.HealthController.Died += EndGame;
         }
 
         public void Restart()
         {
             Player.Player.ResetScore();
-            map.GenerateMap();
+            _map.GenerateMap();
 
             Restarted?.Invoke();
         }
@@ -40,6 +42,14 @@ namespace NavySpade
         public void EndGame()
         {
             GameEnded?.Invoke();
+        }
+
+        public Tile GetHeroStartPoint()
+        {
+            if (_heroStartPoint == null)
+                _heroStartPoint = _map.GetFreeTiles().Random();
+
+            return _heroStartPoint;
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 
-namespace NavySpade.Map
+namespace NavySpade.Map.Generation
 {
     [Serializable]
     public class ColorToTile

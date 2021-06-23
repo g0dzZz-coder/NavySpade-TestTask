@@ -7,21 +7,21 @@ namespace NavySpade.UI
 
     public class EntityIconUI : MonoBehaviour
     {
-        [SerializeField] private EntityData data = null;
-        [SerializeField] private Image image = null;
-        [SerializeField] private Canvas canvas = null;
+        [SerializeField] private EntityData _data = null;
+        [SerializeField] private Image _image = null;
+        [SerializeField] private Canvas _canvas = null;
 
         private Camera _camera;
 
         private void Awake()
         {
-            if (data == null)
+            if (_data == null)
                 Destroy(gameObject);
 
             _camera = Camera.main;
-            canvas.worldCamera = _camera;
+            _canvas.worldCamera = _camera;
 
-            UpdateIcon(data.icon);
+            UpdateIcon(_data.icon);
         }
 
         private void Update()
@@ -31,15 +31,15 @@ namespace NavySpade.UI
 
         private void UpdateIcon(Sprite icon)
         {
-            if (image == null || icon == null)
+            if (_image == null || icon == null)
                 return;
 
-            image.sprite = icon;
+            _image.sprite = icon;
         }
 
         private void LookAt()
         {
-            canvas.transform.LookAt(_camera.transform);
+            _canvas.transform.LookAt(_camera.transform);
         }
     }
 }

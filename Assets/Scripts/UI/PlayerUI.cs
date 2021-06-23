@@ -7,7 +7,7 @@ namespace NavySpade.UI
 
     public class PlayerUI : UIElement
     {
-        [SerializeField] private TMP_Text scoreText = null;
+        [SerializeField] private TMP_Text _scoreText = null;
 
         private void Start()
         {
@@ -20,7 +20,7 @@ namespace NavySpade.UI
 
         private void UpdateScore(int score)
         {
-            scoreText.text = score.ToString();
+            _scoreText.text = score.ToString();
         }
     }
 }

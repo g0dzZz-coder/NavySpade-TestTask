@@ -6,6 +6,7 @@ namespace NavySpade
 {
     using Entities;
     using Map;
+    using Map.Generation;
     using Utils;
 
     public abstract class Spawner<T, K> : MonoBehaviour where T : EntityBase<K> where K : EntityData

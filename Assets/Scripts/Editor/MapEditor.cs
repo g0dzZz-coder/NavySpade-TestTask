@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NavySpade.Editor
 {
-    using Map;
+    using Map.Generation;
     using Editor = UnityEditor.Editor;
 
     [CustomEditor(typeof(MapGenerator), true)]

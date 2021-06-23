@@ -8,12 +8,12 @@ namespace NavySpade.UI
 
     public class SceneChanger : MonoSingleton<SceneChanger>
     {
-        [SerializeField] CanvasGroup canvasGroup = null;
+        [SerializeField] private CanvasGroup _canvasGroup = null;
         [Range(0f, 2f)]
-        [SerializeField] float duration = 0.5f;
+        [SerializeField] private float _duration = 0.5f;
 
-        private string sceneToLoad = string.Empty;
-        private string lastScene = string.Empty;
+        private string _sceneToLoad = string.Empty;
+        private string _lastScene = string.Empty;
 
         protected override void Awake()
         {
@@ -27,47 +27,47 @@ namespace NavySpade.UI
             if (newScene == SceneManager.GetActiveScene().name || string.IsNullOrWhiteSpace(newScene))
                 return;
 
-            sceneToLoad = newScene;
+            _sceneToLoad = newScene;
             PlayFadeOutAnimation();
         }
 
         public void BackToPreviosScene()
         {
-            sceneToLoad = lastScene;
+            _sceneToLoad = _lastScene;
             PlayFadeOutAnimation();
         }
 
         public void OnFadeComplete()
         {
-            SceneManager.LoadSceneAsync(sceneToLoad).completed += OnSceneLoaded;
+            SceneManager.LoadSceneAsync(_sceneToLoad).completed += OnSceneLoaded;
         }
 
         private void PlayFadeInAnimation()
         {
-            if (canvasGroup == null)
+            if (_canvasGroup == null)
                 return;
 
-            canvasGroup.alpha = 1f;
-            canvasGroup.DOFade(0f, duration);
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.DOFade(0f, _duration);
         }
 
         private void PlayFadeOutAnimation()
         {
-            if (canvasGroup == null)
+            if (_canvasGroup == null)
                 return;
 
-            canvasGroup.DOFade(1f, duration).OnComplete(() => OnFadeComplete());
+            _canvasGroup.DOFade(1f, _duration).OnComplete(() => OnFadeComplete());
         }
 
         private void OnSceneLoaded(AsyncOperation operation)
         {
-            lastScene = sceneToLoad;
+            _lastScene = _sceneToLoad;
             PlayFadeInAnimation();
         }
 
         private void OnValidate()
         {
-            if (canvasGroup == null)
+            if (_canvasGroup == null)
                 Debug.LogError($"[{nameof(SceneChanger)}] {nameof(CanvasGroup)} is empty!");
         }
     }

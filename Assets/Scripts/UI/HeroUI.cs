@@ -8,33 +8,33 @@ namespace NavySpade.UI
 
     public class HeroUI : UIElement
     {
-        [SerializeField] private HeroHealthController hero = null;
-        [SerializeField] private TMP_Text healthText = null;
-        [SerializeField] private Transform invulnerability = null;
+        [SerializeField] private HeroHealthController _hero = null;
+        [SerializeField] private TMP_Text _healthText = null;
+        [SerializeField] private Transform _invulnerability = null;
 
         private void Start()
         {
-            UpdateLives(hero.Health);
-            UpdateInvulnerable(hero.IsInvulnerable);
+            UpdateLives(_hero.Health);
+            UpdateInvulnerable(_hero.IsInvulnerable);
 
             Level.Instance.Restarted += Show;
             Level.Instance.GameEnded += Hide;
 
-            hero.HealthUpdated += UpdateLives;
-            hero.InvulnerableUpdated += UpdateInvulnerable;
+            _hero.HealthUpdated += UpdateLives;
+            _hero.InvulnerableUpdated += UpdateInvulnerable;
         }
 
         private void UpdateLives(int livesCount)
         {
-            healthText.text = livesCount.ToString();
+            _healthText.text = livesCount.ToString();
         }
 
         private void UpdateInvulnerable(bool enabled)
         {
             if (enabled)
-                AnimationExtensions.Show(invulnerability);
+                AnimationExtensions.Show(_invulnerability);
             else
-                AnimationExtensions.Hide(invulnerability);
+                AnimationExtensions.Hide(_invulnerability);
         }
     }
 }

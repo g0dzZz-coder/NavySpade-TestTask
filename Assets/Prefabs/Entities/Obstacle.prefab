@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: ab3bae77584f9cf43a11bb1f877ed7e2, type: 2}
-  minMaxScales: {x: 0.1, y: 0.5}
+  _minMaxScales: {x: 0.1, y: 1}
 --- !u!33 &383884861792213921
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -6,29 +6,28 @@ namespace NavySpade.Entities
     [RequireComponent(typeof(IMovementHandler))]
     public class Enemy : EntityBase<EnemyData>
     {
-        private IMovementHandler movementHandler;
-
-        private float timer = 0f;
+        private float _timer = 0f;
+        private IMovementHandler _movementHandler;
 
         protected override void Awake()
         {
             base.Awake();
-            movementHandler = GetComponent<IMovementHandler>();
-            movementHandler.Init(data.speed, 0f);
+
+            _movementHandler = GetComponent<IMovementHandler>();
+            _movementHandler.Init(data.speed, 0f);
         }
 
         private void FixedUpdate()
         {
-            timer += Time.fixedDeltaTime;
+            _timer += Time.fixedDeltaTime;
 
-            if (timer < data.wanderDuration)
+            if (_timer < data.wanderDuration)
                 return;
 
             var target = GetRandomNavmeshLocation(data.wanderRadius, -1);         
-            if (movementHandler.TryToSetDestination(target))
-            {
-                timer = 0;
-            }
+           
+            if (_movementHandler.TryToSetDestination(target))
+                _timer = 0;
         }
 
         private void OnTriggerEnter(Collider other)

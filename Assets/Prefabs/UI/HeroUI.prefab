@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d624b008d2b8b4142920ff1939bf22cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings:
+  _settings:
     duration: 0.5
 --- !u!222 &6771271682084266748
 CanvasRenderer:
@@ -292,9 +292,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39cfb3984385474993566bb55c4fc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hero: {fileID: 0}
-  healthText: {fileID: 9154713305091268286}
-  invulnerability: {fileID: 4302459737311197995}
+  _hero: {fileID: 0}
+  _healthText: {fileID: 9154713305091268286}
+  _invulnerability: {fileID: 4302459737311197995}
 --- !u!1 &9154713304949655757
 GameObject:
   m_ObjectHideFlags: 0

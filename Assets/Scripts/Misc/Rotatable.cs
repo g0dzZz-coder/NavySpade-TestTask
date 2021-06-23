@@ -7,9 +7,9 @@ namespace NavySpade.Misc
 
     public class Rotatable : MonoBehaviour
     {
-        [SerializeField] private LoopAnimationSettings settings = null;
-        [SerializeField] private Vector3 direction = new Vector3(0, 1, 0);
-        [SerializeField] private float angle = 90f;
+        [SerializeField] private LoopAnimationSettings _settings = null;
+        [SerializeField] private Vector3 _direction = new Vector3(0, 1, 0);
+        [SerializeField] private float _angle = 90f;
 
         private void Start()
         {
@@ -18,7 +18,7 @@ namespace NavySpade.Misc
 
         //private void FixedUpdate()
         //{
-        //    transform.Rotate((Vector3.up + Vector3.right) * speed * Time.fixedDeltaTime);
+        //    transform.Rotate((Vector3.up + Vector3.right) * _settings.duration * Time.fixedDeltaTime);
         //}
 
         private void OnDestroy()
@@ -28,9 +28,9 @@ namespace NavySpade.Misc
 
         private void StartAnimation()
         {
-            transform.DORotate(direction * angle, settings.duration, RotateMode.Fast)
-                .SetLoops(-1, settings.loopType)
-                .SetEase(settings.ease);
+            transform.DORotate(_direction * _angle, _settings.duration, RotateMode.Fast)
+                .SetLoops(-1, _settings.loopType)
+                .SetEase(_settings.ease);
         }
     }
 }

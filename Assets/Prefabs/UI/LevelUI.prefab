@@ -731,13 +731,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19e3b0727f209c4286d206f89d71f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hero: {fileID: 0}
-  crystalContainer: {fileID: 0}
-  crystalInfo:
+  _crystalContainer: {fileID: 0}
+  _crystalInfo:
     countText: {fileID: 5637006642622751236}
     distanceText: {fileID: 3413516141628747360}
-  enemyContainer: {fileID: 0}
-  enemyInfo:
+  _enemyContainer: {fileID: 0}
+  _enemyInfo:
     countText: {fileID: 8786228912342977904}
     distanceText: {fileID: 8442169947458478740}
 --- !u!1 &3024516895492789673

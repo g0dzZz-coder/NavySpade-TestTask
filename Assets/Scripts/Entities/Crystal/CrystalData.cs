@@ -7,12 +7,13 @@ namespace NavySpade.Entities
     {
         [Header("Rewards")]
         public int healthReward = 1;
+
         [MinMaxSlider(0, 10)]
-        [SerializeField] private Vector2Int scoreReward = new Vector2Int(1, 10);
+        [SerializeField] private Vector2Int _scoreReward = new Vector2Int(1, 10);
 
         public int GetReward()
         {
-            return Random.Range(scoreReward.x, scoreReward.y);
+            return Random.Range(_scoreReward.x, _scoreReward.y);
         }
     }
 }

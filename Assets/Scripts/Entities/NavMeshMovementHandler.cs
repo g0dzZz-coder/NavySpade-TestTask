@@ -12,22 +12,23 @@ namespace NavySpade.Entities
 
     public class NavMeshMovementHandler : MonoBehaviour, IMovementHandler
     {
-        [SerializeField] private NavMeshAgent agent = null;
+        [SerializeField] private NavMeshAgent _agent = null;
 
         public void Init(float speed, float stoppingDistance)
         {
-            agent.speed = speed;
-            agent.stoppingDistance = stoppingDistance;
+            _agent.speed = speed;
+            _agent.stoppingDistance = stoppingDistance;
         }
 
         public void SetPosition(Vector3 position)
         {
-            agent.SetDestination(position);
+            transform.position = position;
+            //_agent.SetDestination(position);
         }
 
         public bool TryToSetDestination(Vector3 destination)
         {
-            if (agent.SetDestination(destination))
+            if (_agent.SetDestination(destination))
                 return true;
 
             return false;
